@@ -97,4 +97,23 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
                 "come!", true).save();
         new Stitch("yo", R.drawable.yo, "Yarn over", "Instructions to come!", true).save();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Stitch stitch = (Stitch) o;
+
+        return abbreviation.equals(stitch.abbreviation);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return abbreviation.hashCode();
+    }
 }
