@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">KnitGrid</string>
+    <string name="activity_main_pattern_button_text">Pattern</string>
+    <string name="activity_main_legend_button_text">Legend</string>
+    <string name="activity_main_navigation_collapse_button_text">...</string>
 </resources>
