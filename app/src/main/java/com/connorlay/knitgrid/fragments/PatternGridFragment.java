@@ -13,6 +13,8 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 
 import com.connorlay.knitgrid.R;
+import com.connorlay.knitgrid.models.Stitch;
+import com.connorlay.knitgrid.presenters.PatternPresenter;
 
 import butterknife.Bind;
 import butterknife.BindColor;
@@ -23,9 +25,9 @@ import butterknife.ButterKnife;
  */
 public class PatternGridFragment extends Fragment {
 
-    public static final int PATTERN_GRID_ROWS = 30;
-    public static final int PATTER_GRID_COLUMNS = 10;
     public static final int PATTERN_GRID_PADDING = 16;
+
+    public static final String ARG_STITCH_GRID = "PatternGridFragment.PatternPresenter";
 
     @Bind(R.id.activity_pattern_grid_view_pattern_grid_layout)
     GridLayout mGridLayout;
@@ -36,10 +38,22 @@ public class PatternGridFragment extends Fragment {
     @BindColor(R.color.colorPrimary)
     int mCellHighlightColor;
 
+    private PatternPresenter mPatternPresenter;
+
+    public static PatternGridFragment newInstance(PatternPresenter patternPresenter) {
+        PatternGridFragment fragment = new PatternGridFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_STITCH_GRID, patternPresenter);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pattern_grid, container, false);
         ButterKnife.bind(this, rootView);
+
+        mPatternPresenter = getArguments().getParcelable(ARG_STITCH_GRID);
 
         populateGridLayout();
         setViewPadding(mGridLayout, PATTERN_GRID_PADDING);
@@ -55,16 +69,19 @@ public class PatternGridFragment extends Fragment {
             }
         };
 
-        int cellSize = calculateCellSize(PATTER_GRID_COLUMNS);
-        mGridLayout.setRowCount(PATTERN_GRID_ROWS);
-        mGridLayout.setColumnCount(PATTER_GRID_COLUMNS);
+        int cellSize = calculateCellSize(mPatternPresenter.getColumns());
+        mGridLayout.setRowCount(mPatternPresenter.getRows());
+        mGridLayout.setColumnCount(mPatternPresenter.getColumns());
 
-        for (int i = 0; i < PATTERN_GRID_ROWS * PATTER_GRID_COLUMNS; i += 1) {
-            ImageView cellImageView = new ImageView(getActivity(), null, R.style.PatternGridLayoutCell);
-            cellImageView.setImageResource(R.drawable.k);
-            cellImageView.setOnClickListener(listener);
-            cellImageView.setBackgroundColor(mCellBackgroundColor);
-            mGridLayout.addView(cellImageView, cellSize, cellSize);
+        for (int i = 0; i < mPatternPresenter.getRows(); i += 1) {
+            for (int j = 0; j < mPatternPresenter.getColumns(); j += 1) {
+                Stitch stitch = mPatternPresenter.getStitch(i, j);
+                ImageView cellImageView = new ImageView(getActivity(), null, R.style.PatternGridLayoutCell);
+                cellImageView.setImageResource(stitch.getIconID());
+                cellImageView.setOnClickListener(listener);
+                cellImageView.setBackgroundColor(mCellBackgroundColor);
+                mGridLayout.addView(cellImageView, cellSize, cellSize);
+            }
         }
     }
 
