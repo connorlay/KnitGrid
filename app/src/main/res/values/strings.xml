@@ -3,4 +3,6 @@
     <string name="activity_pattern_grid_view_pattern_button_text">Pattern</string>
     <string name="activity_pattern_grid_view_legend_button_text">Legend</string>
     <string name="activity_pattern_grid_view_navigation_collapse_button_text">...</string>
+    <string name="instructions_title">Instructions</string>
+    <string name="nav_stitch_glossary">Stitch Details</string>
 </resources>
