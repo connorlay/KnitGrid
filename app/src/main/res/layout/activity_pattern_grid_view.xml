@@ -4,50 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
-    tools:context="com.connorlay.knitgrid.MainActivity">
+    tools:context=".PatternGridViewActivity">
 
     <LinearLayout
-        android:id="@+id/activity_main_navigation_linear_layout"
+        android:id="@+id/activity_pattern_grid_view_navigation_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@android:color/white">
 
         <Button
-            android:id="@+id/activity_main_pattern_button"
+            android:id="@+id/activity_pattern_grid_view_pattern_button"
             style="@style/TabNavigationButton"
-            android:text="@string/activity_main_pattern_button_text" />
+            android:text="@string/activity_pattern_grid_view_pattern_button_text" />
 
         <Button
-            android:id="@+id/activity_main_legend_button"
+            android:id="@+id/activity_pattern_grid_view_legend_button"
             style="@style/TabNavigationButton"
-            android:text="@string/activity_main_legend_button_text" />
+            android:text="@string/activity_pattern_grid_view_legend_button_text" />
 
         <Button
-            android:id="@+id/activity_main_navigation_collapse_button"
+            android:id="@+id/activity_pattern_grid_view_navigation_collapse_button"
             style="@style/TabNavigationButton"
-            android:text="@string/activity_main_navigation_collapse_button_text" />
+            android:text="@string/activity_pattern_grid_view_navigation_collapse_button_text" />
+
     </LinearLayout>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/activity_main_navigation_linear_layout">
+        android:layout_below="@id/activity_pattern_grid_view_navigation_linear_layout">
 
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            tools:background="@android:color/holo_green_light"
-            >
+            tools:background="@android:color/holo_green_light">
 
             <GridLayout
-                android:id="@+id/activity_main_pattern_grid_layout"
+                android:id="@+id/activity_pattern_grid_view_pattern_grid_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
-                 />
+                android:background="@android:color/darker_gray" />
 
         </ScrollView>
     </HorizontalScrollView>
-
 </RelativeLayout>
