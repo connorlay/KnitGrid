@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,16 @@ public class PatternGridFragment extends Fragment {
         populateGridLayout();
         setViewPadding(mGridLayout, PATTERN_GRID_PADDING);
 
-        ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(getActivity(), new ScaleListener());
+        final ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(getActivity(), new ScaleListener());
+        rootView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (scaleGestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return rootView;
     }
