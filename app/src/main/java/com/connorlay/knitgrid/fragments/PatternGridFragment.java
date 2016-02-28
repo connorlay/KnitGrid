@@ -50,13 +50,10 @@ public class PatternGridFragment extends Fragment {
         setViewPadding(mGridLayout, PATTERN_GRID_PADDING);
 
         final ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(getActivity(), new ScaleListener());
-        rootView.setOnTouchListener(new View.OnTouchListener() {
+        mGridLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (scaleGestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
+                return scaleGestureDetector.onTouchEvent(event);
             }
         });
 
