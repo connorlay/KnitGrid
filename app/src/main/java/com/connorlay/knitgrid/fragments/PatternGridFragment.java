@@ -1,68 +1,81 @@
-package com.connorlay.knitgrid;
+package com.connorlay.knitgrid.fragments;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+
+import com.connorlay.knitgrid.R;
 
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 
-public class PatternGridViewActivity extends AppCompatActivity {
+/**
+ * Created by connorlay on 2/26/16.
+ */
+public class PatternGridFragment extends Fragment {
 
     public static final int PATTERN_GRID_ROWS = 30;
     public static final int PATTER_GRID_COLUMNS = 10;
     public static final int PATTERN_GRID_PADDING = 16;
 
     @Bind(R.id.activity_pattern_grid_view_pattern_grid_layout)
-    GridLayout gridLayout;
-
-    @BindColor(R.color.colorAccent)
-    int cellHighLight;
+    GridLayout mGridLayout;
 
     @BindColor(android.R.color.white)
-    int cellBackground;
+    int mCellBackgroundColor;
+
+    @BindColor(R.color.colorPrimary)
+    int mCellHighlightColor;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pattern_grid_view);
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_pattern_grid, container, false);
+        ButterKnife.bind(this, rootView);
 
-        setViewPadding(gridLayout, PATTERN_GRID_PADDING);
         populateGridLayout();
+        setViewPadding(mGridLayout, PATTERN_GRID_PADDING);
+
+        return rootView;
     }
 
     private void populateGridLayout() {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(cellHighLight);
+                v.setBackgroundColor(mCellHighlightColor);
             }
         };
 
         int cellSize = calculateCellSize(PATTER_GRID_COLUMNS);
-        gridLayout.setRowCount(PATTERN_GRID_ROWS);
-        gridLayout.setColumnCount(PATTER_GRID_COLUMNS);
+        mGridLayout.setRowCount(PATTERN_GRID_ROWS);
+        mGridLayout.setColumnCount(PATTER_GRID_COLUMNS);
 
-        for (int i = 0; i < PATTERN_GRID_ROWS * PATTER_GRID_COLUMNS; i++) {
-            ImageView cellImageView = new ImageView(this, null, R.style.PatternGridLayoutCell);
+        for (int i = 0; i < PATTERN_GRID_ROWS * PATTER_GRID_COLUMNS; i += 1) {
+            ImageView cellImageView = new ImageView(getActivity(), null, R.style.PatternGridLayoutCell);
             cellImageView.setImageResource(R.drawable.knit);
             cellImageView.setOnClickListener(listener);
-            cellImageView.setBackgroundColor(cellBackground);
-            gridLayout.addView(cellImageView, cellSize, cellSize);
+            cellImageView.setBackgroundColor(mCellBackgroundColor);
+            mGridLayout.addView(cellImageView, cellSize, cellSize);
         }
     }
 
     // TODO: sometimes the horizontal scroll view is not full width when it should be. rounding error?
     private int calculateCellSize(int columns) {
-        Display display = getWindowManager().getDefaultDisplay();
+        WindowManager windowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+
         Point point = new Point();
         display.getSize(point);
+
         float dp = PATTERN_GRID_PADDING / getResources().getDisplayMetrics().density;
         return (int) ((point.x - 2 * dp) / columns + 0.5f);
     }
