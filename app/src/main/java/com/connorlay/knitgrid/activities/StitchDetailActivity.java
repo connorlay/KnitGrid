@@ -7,8 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.connorlay.knitgrid.R;
-import com.connorlay.knitgrid.activities.PatternGridViewActivity;
-import com.connorlay.knitgrid.data.Stitch;
+import com.connorlay.knitgrid.models.Stitch;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
