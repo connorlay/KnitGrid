@@ -61,7 +61,7 @@ public class PatternGridFragment extends Fragment {
 
         for (int i = 0; i < PATTERN_GRID_ROWS * PATTER_GRID_COLUMNS; i += 1) {
             ImageView cellImageView = new ImageView(getActivity(), null, R.style.PatternGridLayoutCell);
-            cellImageView.setImageResource(R.drawable.knit);
+            cellImageView.setImageResource(R.drawable.k);
             cellImageView.setOnClickListener(listener);
             cellImageView.setBackgroundColor(mCellBackgroundColor);
             mGridLayout.addView(cellImageView, cellSize, cellSize);
