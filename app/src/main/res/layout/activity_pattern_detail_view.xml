@@ -4,36 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
-    tools:context=".activities.PatternGridViewActivity">
+    tools:context=".activities.PatternDetailActivity">
 
     <LinearLayout
-        android:id="@+id/activity_pattern_grid_view_navigation_linear_layout"
+        android:id="@+id/activity_pattern_detail_navigation_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@android:color/white">
 
         <Button
-            android:id="@+id/activity_pattern_grid_view_pattern_button"
+            android:id="@+id/activity_pattern_detail_pattern_button"
             style="@style/TabNavigationButton"
-            android:text="@string/activity_pattern_grid_view_pattern_button_text" />
+            android:text="@string/activity_pattern_detail_pattern_button_text" />
 
         <Button
-            android:id="@+id/activity_pattern_grid_view_legend_button"
+            android:id="@+id/activity_pattern_detail_legend_button"
             style="@style/TabNavigationButton"
-            android:text="@string/activity_pattern_grid_view_legend_button_text" />
+            android:text="@string/activity_pattern_detail_legend_button_text" />
 
         <Button
-            android:id="@+id/activity_pattern_grid_view_navigation_collapse_button"
+            android:id="@+id/activity_pattern_detail_navigation_collapse_button"
             style="@style/TabNavigationButton"
-            android:text="@string/activity_pattern_grid_view_navigation_collapse_button_text" />
+            android:text="@string/activity_pattern_detail_navigation_collapse_button_text" />
 
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/activity_pattern_grid_view_content_frame_layout"
+        android:id="@+id/activity_pattern_detail_content_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/activity_pattern_grid_view_navigation_linear_layout" />
+        android:layout_below="@id/activity_pattern_detail_navigation_linear_layout" />
 
 </RelativeLayout>
