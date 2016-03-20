@@ -38,7 +38,7 @@ public class StitchDetailActivity extends AppCompatActivity {
 
         instructionsText.setVisibility(View.GONE);
 
-        Stitch stitch = (Stitch) getIntent().getSerializableExtra(PatternGridViewActivity.STITCH_EXTRA);
+        Stitch stitch = (Stitch) getIntent().getSerializableExtra(PatternDetailActivity.STITCH_EXTRA);
         instructionsText.setText(stitch.getInstructions());
         stitchTitle.setText(stitch.getAbbreviation());
         detailsText.setText(stitch.getDetails());

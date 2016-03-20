@@ -3,7 +3,11 @@ package com.connorlay.knitgrid.presenters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.models.Stitch;
+import com.connorlay.knitgrid.models.StitchPatternRelation;
+
+import java.util.List;
 
 /**
  * Created by connorlay on 2/28/16.
@@ -12,11 +16,29 @@ public class PatternPresenter implements Parcelable {
 
     private Stitch[][] mStitchGrid;
     private int mRows, mCols;
+    private Pattern mPattern;
 
     public PatternPresenter(int rows, int cols) {
         mRows = rows;
         mCols = cols;
         mStitchGrid = new Stitch[rows][cols];
+    }
+
+    public PatternPresenter(Pattern pattern) {
+        mRows = pattern.getRows();
+        mCols = pattern.getColumns();
+        mStitchGrid = new Stitch[mRows][mCols];
+        populateStitchGrid(pattern);
+    }
+
+    private void populateStitchGrid(Pattern pattern) {
+        List<StitchPatternRelation> stitchRelations = pattern.getStitchRelations();
+        for (StitchPatternRelation stitchPatternRelation : stitchRelations) {
+            int row = stitchPatternRelation.getRow();
+            int column = stitchPatternRelation.getCol();
+            Stitch stitch = stitchPatternRelation.getStitch();
+            mStitchGrid[row][column] = stitch;
+        }
     }
 
     protected PatternPresenter(Parcel in) {

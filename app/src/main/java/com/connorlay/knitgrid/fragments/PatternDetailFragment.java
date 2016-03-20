@@ -23,13 +23,13 @@ import butterknife.ButterKnife;
 /**
  * Created by connorlay on 2/26/16.
  */
-public class PatternGridFragment extends Fragment {
+public class PatternDetailFragment extends Fragment {
 
     public static final int PATTERN_GRID_PADDING = 16;
 
-    public static final String ARG_STITCH_GRID = "PatternGridFragment.PatternPresenter";
+    public static final String ARG_STITCH_GRID = "PatternDetailFragment.PatternPresenter";
 
-    @Bind(R.id.activity_pattern_grid_view_pattern_grid_layout)
+    @Bind(R.id.activity_pattern_detail_grid_layout)
     GridLayout mGridLayout;
 
     @BindColor(android.R.color.white)
@@ -40,8 +40,8 @@ public class PatternGridFragment extends Fragment {
 
     private PatternPresenter mPatternPresenter;
 
-    public static PatternGridFragment newInstance(PatternPresenter patternPresenter) {
-        PatternGridFragment fragment = new PatternGridFragment();
+    public static PatternDetailFragment newInstance(PatternPresenter patternPresenter) {
+        PatternDetailFragment fragment = new PatternDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_STITCH_GRID, patternPresenter);
         fragment.setArguments(args);
@@ -50,7 +50,7 @@ public class PatternGridFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_pattern_grid, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_pattern_detail, container, false);
         ButterKnife.bind(this, rootView);
 
         mPatternPresenter = getArguments().getParcelable(ARG_STITCH_GRID);
