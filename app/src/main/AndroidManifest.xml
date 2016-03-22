@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.connorlay.knitgrid"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.connorlay.knitgrid">
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.orm.SugarApp">
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="DATABASE"
+            android:value="knitgrid.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="5" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.connorlay.knitgrid.models" />
 
-        <meta-data android:name="DATABASE" android:value="knitgrid.db" />
-        <meta-data android:name="VERSION" android:value="5" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.connorlay.knitgrid.models" />
-
-        <activity android:name=".activities.PatternDetailActivity">
+        <activity android:name=".activities.PatternListActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-            <activity android:name=".activities.StitchDetailActivity">
-        </activity>
+        <activity android:name=".activities.StitchDetailActivity"></activity>
+        <activity android:name=".activities.PatternDetailActivity"></activity>
     </application>
 
 </manifest>

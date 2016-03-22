@@ -28,6 +28,7 @@ public class PatternPresenter implements Parcelable {
         mRows = pattern.getRows();
         mCols = pattern.getColumns();
         mStitchGrid = new Stitch[mRows][mCols];
+        mPattern = pattern;
         populateStitchGrid(pattern);
     }
 
@@ -89,42 +90,38 @@ public class PatternPresenter implements Parcelable {
         mStitchGrid[row][col] = stitch;
     }
 
+    public Pattern getPattern() {
+        return mPattern;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-
         for (int i = 0; i < mRows; i += 1) {
             for (int j = 0; j < mCols; j += 1) {
                 if (mStitchGrid[i][j] == null) {
-                   stringBuilder.append("_");
+                    stringBuilder.append("_");
                 } else {
                     stringBuilder.append(mStitchGrid[i][j].getAbbreviation());
                 }
-
                 if (j < mCols - 1) {
                     stringBuilder.append(", ");
                 }
             }
-
             stringBuilder.append("\n");
         }
-
         return stringBuilder.toString();
     }
 
     public void addRowBefore(int row) {
         Stitch[][] newStitchGrid = new Stitch[mRows + 1][mCols];
-
         for (int i = 0; i < row; i += 1) {
             newStitchGrid[i] = mStitchGrid[i];
         }
-
         newStitchGrid[row] = new Stitch[mCols];
-
         for (int i = row + 1; i < mRows + 1; i += 1) {
             newStitchGrid[i] = mStitchGrid[i - 1];
         }
-
         mStitchGrid = newStitchGrid;
         mRows += 1;
     }
@@ -135,21 +132,16 @@ public class PatternPresenter implements Parcelable {
 
     public void addColumnBefore(int col) {
         Stitch[][] newStitchGrid = new Stitch[mRows][mCols + 1];
-
         for (int i = 0; i < mRows; i += 1) {
             Stitch[] newRow = new Stitch[mCols + 1];
-
             for (int j = 0; j < col; j += 1) {
                 newRow[j] = mStitchGrid[i][j];
             }
-
             for (int j = col + 1; j < mCols + 1; j += 1) {
                 newRow[j] = mStitchGrid[i][j - 1];
             }
-
             newStitchGrid[i] = newRow;
         }
-
         mStitchGrid = newStitchGrid;
         mCols += 1;
     }
@@ -162,9 +154,7 @@ public class PatternPresenter implements Parcelable {
         if (mCols <= 1) {
             return;
         }
-
         Stitch[][] newStitchGrid = new Stitch[mRows][mCols - 1];
-
         for (int i = 0; i < mRows; i += 1) {
             for (int j = 0; j < col; j += 1) {
                 newStitchGrid[i][j] = mStitchGrid[i][j];
@@ -173,7 +163,6 @@ public class PatternPresenter implements Parcelable {
                 newStitchGrid[i][j - 1] = mStitchGrid[i][j];
             }
         }
-
         mStitchGrid = newStitchGrid;
         mCols -= 1;
     }
@@ -182,16 +171,13 @@ public class PatternPresenter implements Parcelable {
         if (mRows <= 1) {
             return;
         }
-
         Stitch[][] newStitchGrid = new Stitch[mRows - 1][mCols];
-
         for (int i = 0; i < row; i += 1) {
             newStitchGrid[i] = mStitchGrid[i];
         }
         for (int i = row + 1; i < mRows; i += 1) {
             newStitchGrid[i - 1] = mStitchGrid[i];
         }
-
         mStitchGrid = newStitchGrid;
         mRows -= 1;
     }
