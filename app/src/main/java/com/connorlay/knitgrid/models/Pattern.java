@@ -14,17 +14,17 @@ public class Pattern extends SugarRecord implements Parcelable {
     private String name;
     private int rows;
     private int cols;
-    private boolean alternating;
+    private boolean showEvenRows;
 
     public Pattern() {
 
     }
 
-    public Pattern(String name, int rows, int columns, boolean alternating) {
+    public Pattern(String name, int rows, int columns, boolean showEvenRows) {
         this.name = name;
         this.rows = rows;
         this.cols = columns;
-        this.alternating = alternating;
+        this.showEvenRows = showEvenRows;
     }
 
     protected Pattern(Parcel in) {
@@ -32,7 +32,7 @@ public class Pattern extends SugarRecord implements Parcelable {
         name = in.readString();
         rows = in.readInt();
         cols = in.readInt();
-        alternating = in.readByte() != 0;
+        showEvenRows = in.readByte() != 0;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Pattern extends SugarRecord implements Parcelable {
         dest.writeString(name);
         dest.writeInt(rows);
         dest.writeInt(cols);
-        dest.writeByte((byte) (alternating ? 1 : 0));
+        dest.writeByte((byte) (showEvenRows ? 1 : 0));
     }
 
     @Override
@@ -73,8 +73,8 @@ public class Pattern extends SugarRecord implements Parcelable {
         return cols;
     }
 
-    public boolean isAlternating() {
-        return alternating;
+    public boolean showsEvenRows() {
+        return showEvenRows;
     }
 
     public void setName(String name) {
@@ -89,8 +89,8 @@ public class Pattern extends SugarRecord implements Parcelable {
         this.cols = columns;
     }
 
-    public void setAlternating(boolean alternating) {
-        this.alternating = alternating;
+    public void setShowsEvenRows(boolean showEvenRows) {
+        this.showEvenRows = showEvenRows;
     }
 
     public List<StitchPatternRelation> getStitchRelations() {
@@ -98,6 +98,7 @@ public class Pattern extends SugarRecord implements Parcelable {
     }
 
     public void setStitch(Stitch stitch, int row, int column) {
+        // TODO: support editing an existing stitch relation?
         new StitchPatternRelation(this, stitch, row, column).save();
     }
 }
