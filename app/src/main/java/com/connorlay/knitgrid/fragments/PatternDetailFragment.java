@@ -25,6 +25,11 @@ import butterknife.ButterKnife;
  * Created by connorlay on 2/26/16.
  */
 public class PatternDetailFragment extends Fragment {
+
+    public interface CellSelectedListener {
+        public void onCellSelected(int row, int column);
+    }
+
     public static final int PATTERN_GRID_PADDING = 16;
     public static final String ARG_PATTERN_PRESENTER = "PatternDetailFragment.PatternPresenter";
     public static final String HIGHLIGHT_ROW_KEY = "_highlight_row";
@@ -41,6 +46,8 @@ public class PatternDetailFragment extends Fragment {
 
     private PatternPresenter mPatternPresenter;
 
+    private CellSelectedListener mListener;
+
     public static PatternDetailFragment newInstance(PatternPresenter patternPresenter) {
         PatternDetailFragment fragment = new PatternDetailFragment();
         Bundle args = new Bundle();
@@ -49,8 +56,16 @@ public class PatternDetailFragment extends Fragment {
         return fragment;
     }
 
+    public static PatternDetailFragment newInstance(PatternPresenter patternPresenter,
+                                                    CellSelectedListener listener) {
+        PatternDetailFragment fragment = newInstance(patternPresenter);
+        fragment.mListener = listener;
+        return fragment;
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pattern_detail, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -59,8 +74,13 @@ public class PatternDetailFragment extends Fragment {
         populateGridLayout();
         setViewPadding(mGridLayout, PATTERN_GRID_PADDING);
 
-        int[] highlightCoords = getHighlightPrefs(mPatternPresenter.getPatternId().toString());
-        highlightUpToCell(highlightCoords[0], highlightCoords[1]);
+        Long patternId = mPatternPresenter.getPatternId();
+        if (patternId != null) {
+            int[] highlightCoords = getHighlightPrefs(mPatternPresenter.getPatternId().toString());
+            highlightUpToCell(highlightCoords[0], highlightCoords[1]);
+        } else {
+            unhighlightAllCells();
+        }
 
         return rootView;
     }
@@ -76,26 +96,50 @@ public class PatternDetailFragment extends Fragment {
                 final int column = j;
 
                 Stitch stitch = mPatternPresenter.getStitch(row, column);
-                ImageView cellImageView = new ImageView(getActivity(), null, R.style.PatternGridLayoutCell);
+                ImageView cellImageView = new ImageView(getActivity(), null,
+                        R.style.PatternGridLayoutCell);
 
-                cellImageView.setImageResource(stitch.getIconID());
-                cellImageView.setBackgroundColor(mCellDefaultColor);
-                cellImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        highlightUpToCell(row, column);
-                        setHighlightPrefs(mPatternPresenter.getPatternId().toString(), row, column);
-                    }
-                });
+                if (stitch == null) {
+                    cellImageView.setImageResource(R.drawable.blank);
+                } else {
+                    cellImageView.setImageResource(stitch.getIconID());
+                }
 
+                if (mListener == null) {
+                    cellImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            highlightUpToCell(row, column);
+                            setHighlightPrefs(mPatternPresenter.getPatternId().toString(), row,
+                                    column);
+                        }
+                    });
+                } else {
+                    cellImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            unhighlightAllCells();
+                            v.setBackgroundColor(mCellHighlightColor);
+                            mListener.onCellSelected(row, column);
+                        }
+                    });
+                }
                 mGridLayout.addView(cellImageView, cellSize, cellSize);
             }
         }
     }
 
-    // TODO: sometimes the horizontal scroll view is not full width when it should be. rounding error?
+    private void unhighlightAllCells() {
+        for (int i = 0; i < mGridLayout.getChildCount(); i++) {
+            mGridLayout.getChildAt(i).setBackgroundColor(mCellDefaultColor);
+        }
+    }
+
+    // TODO: sometimes the horizontal scroll view is not full width when it should be. rounding
+    // error?
     private int calculateCellSize(int columns) {
-        WindowManager windowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) getActivity().getSystemService(Context
+                .WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
 
         Point point = new Point();
@@ -140,16 +184,32 @@ public class PatternDetailFragment extends Fragment {
     }
 
     private void setHighlightPrefs(String patternId, int row, int column) {
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences("KnitGrid", Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("KnitGrid", Context
+                .MODE_PRIVATE).edit();
         editor.putInt(patternId + HIGHLIGHT_ROW_KEY, row);
         editor.putInt(patternId + HIGHLIGHT_COLUMN_KEY, column);
         editor.commit();
     }
 
     private int[] getHighlightPrefs(String patternId) {
-        SharedPreferences prefs = getActivity().getSharedPreferences("KnitGrid", Context.MODE_PRIVATE);
-        int row = prefs.getInt(patternId + HIGHLIGHT_ROW_KEY, 0);
-        int column = prefs.getInt(patternId + HIGHLIGHT_COLUMN_KEY, 0);
+        SharedPreferences prefs = getActivity().getSharedPreferences("KnitGrid", Context
+                .MODE_PRIVATE);
+        int row = prefs.getInt(patternId + HIGHLIGHT_ROW_KEY, mGridLayout.getRowCount());
+        int column = prefs.getInt(patternId + HIGHLIGHT_COLUMN_KEY, mGridLayout.getColumnCount());
         return new int[]{row, column};
+    }
+
+    public void setStitch(int row, int column, Stitch stitch) {
+        mPatternPresenter.setStitch(row, column, stitch);
+        ImageView cell = (ImageView) mGridLayout.getChildAt(row * mGridLayout.getColumnCount() +
+                column);
+        cell.setImageResource(stitch.getIconID());
+        cell.setBackgroundColor(mCellDefaultColor);
+    }
+
+    public void savePattern() {
+        mPatternPresenter.savePattern();
+        setHighlightPrefs(mPatternPresenter.getPatternId().toString(), mGridLayout.getRowCount(),
+                mGridLayout.getColumnCount());
     }
 }

@@ -5,4 +5,11 @@
     <string name="activity_pattern_detail_navigation_collapse_button_text">...</string>
     <string name="instructions_title">Instructions</string>
     <string name="nav_stitch_glossary">Stitch Details</string>
+    <string name="pattern_create_dialog_name_hint">Name</string>
+    <string name="create_pattern_rows_label">Rows</string>
+    <string name="create_pattern_columns_label">Columns</string>
+    <string name="save_button">Save</string>
+    <string name="create_pattern_dialog_title">Create Pattern</string>
+    <string name="create_pattern_dialog_positive_button">Create</string>
+    <string name="show_even_rows_checkbox_label">Show even rows</string>
 </resources>
