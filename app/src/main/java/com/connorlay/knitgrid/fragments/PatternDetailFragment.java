@@ -27,7 +27,7 @@ public class PatternDetailFragment extends Fragment {
 
     public static final int PATTERN_GRID_PADDING = 16;
 
-    public static final String ARG_STITCH_GRID = "PatternDetailFragment.PatternPresenter";
+    public static final String ARG_PATTERN_PRESENTER = "PatternDetailFragment.PatternPresenter";
 
     @Bind(R.id.activity_pattern_detail_grid_layout)
     GridLayout mGridLayout;
@@ -43,7 +43,7 @@ public class PatternDetailFragment extends Fragment {
     public static PatternDetailFragment newInstance(PatternPresenter patternPresenter) {
         PatternDetailFragment fragment = new PatternDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_STITCH_GRID, patternPresenter);
+        args.putParcelable(ARG_PATTERN_PRESENTER, patternPresenter);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +53,7 @@ public class PatternDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_pattern_detail, container, false);
         ButterKnife.bind(this, rootView);
 
-        mPatternPresenter = getArguments().getParcelable(ARG_STITCH_GRID);
+        mPatternPresenter = getArguments().getParcelable(ARG_PATTERN_PRESENTER);
 
         populateGridLayout();
         setViewPadding(mGridLayout, PATTERN_GRID_PADDING);

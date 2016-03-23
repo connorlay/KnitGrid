@@ -28,6 +28,7 @@ public class Pattern extends SugarRecord implements Parcelable {
     }
 
     protected Pattern(Parcel in) {
+        setId(in.readLong());
         name = in.readString();
         rows = in.readInt();
         cols = in.readInt();
@@ -36,6 +37,7 @@ public class Pattern extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(getId());
         dest.writeString(name);
         dest.writeInt(rows);
         dest.writeInt(cols);
