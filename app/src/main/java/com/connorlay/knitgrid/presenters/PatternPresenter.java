@@ -17,11 +17,14 @@ public class PatternPresenter implements Parcelable {
     private Stitch[][] mStitchGrid;
     private int mRows, mCols;
     private Pattern mPattern;
+    private boolean mShowEvenRows;
+    private Long mPatternId;
 
-    public PatternPresenter(int rows, int cols) {
+    public PatternPresenter(int rows, int cols, boolean showEvenRows) {
         mRows = rows;
         mCols = cols;
         mStitchGrid = new Stitch[rows][cols];
+        mShowEvenRows = showEvenRows;
     }
 
     public PatternPresenter(Pattern pattern) {
@@ -29,6 +32,8 @@ public class PatternPresenter implements Parcelable {
         mCols = pattern.getColumns();
         mStitchGrid = new Stitch[mRows][mCols];
         mPattern = pattern;
+        mShowEvenRows = pattern.showsEvenRows();
+        mPatternId = pattern.getId();
         populateStitchGrid(pattern);
     }
 
@@ -54,7 +59,7 @@ public class PatternPresenter implements Parcelable {
         dest.writeInt(mRows);
         dest.writeInt(mCols);
         // TODO: there is probably a better way to do this without relying on serializers
-        dest.writeSerializable(mStitchGrid);
+        dest.writeSerializable(mStitchGrid); // TODO: this crashes when hitting the back button from the pattern detail fragment
     }
 
     @Override
@@ -92,6 +97,18 @@ public class PatternPresenter implements Parcelable {
 
     public Pattern getPattern() {
         return mPattern;
+    }
+
+    public boolean showsEvenRows() {
+        return mShowEvenRows;
+    }
+
+    public void setShowsEvenRows(boolean showEvenRows) {
+       mShowEvenRows = showEvenRows;
+    }
+
+    public Long getPatternId() {
+        return mPatternId;
     }
 
     @Override
