@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.connorlay.knitgrid">
+<manifest package="com.connorlay.knitgrid"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name="com.orm.SugarApp"
@@ -11,26 +11,28 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="DATABASE"
-            android:value="knitgrid.db" />
+            android:value="knitgrid.db"/>
         <meta-data
             android:name="VERSION"
             android:value="6" />
         <meta-data
             android:name="QUERY_LOG"
-            android:value="true" />
+            android:value="true"/>
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.connorlay.knitgrid.models" />
+            android:value="com.connorlay.knitgrid.models"/>
 
         <activity android:name=".activities.PatternListActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.StitchDetailActivity"></activity>
-        <activity android:name=".activities.PatternDetailActivity"></activity>
+        <activity android:name=".activities.StitchDetailActivity"/>
+        <activity android:name=".activities.PatternDetailActivity"/>
+        <activity android:name=".activities.PatternCreationActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -62,7 +62,7 @@ public class PatternPresenterTest {
                           "i, 0, k, l\n" +
                           "m, n, o, p\n";
 
-        Stitch stitch = new Stitch("0", R.drawable.k1, "", "", true);
+        Stitch stitch = new Stitch("0", R.drawable.k, "", "", true);
         mPatternPresenter.setStitch(2, 1, stitch);
 
         assert(mPatternPresenter.toString()).equals(expected);

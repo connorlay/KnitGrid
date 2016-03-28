@@ -15,8 +15,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PatternListActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CREATE = 1;
 
     @Bind(R.id.row_pattern_recycylerview)
     RecyclerView mRecyclerView;
@@ -62,5 +65,11 @@ public class PatternListActivity extends AppCompatActivity {
                 pattern.setStitch(Stitch.first(Stitch.class), i, j);
             }
         }
+    }
+
+    @OnClick(R.id.activity_pattern_list_fab)
+    public void goToPatternCreation() {
+        Intent intent = new Intent(this, PatternCreationActivity.class);
+        startActivityForResult(intent, REQUEST_CREATE);
     }
 }
