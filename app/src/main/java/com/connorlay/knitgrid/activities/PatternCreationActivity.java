@@ -11,8 +11,9 @@ import android.widget.Button;
 import android.widget.GridLayout;
 
 import com.connorlay.knitgrid.R;
+import com.connorlay.knitgrid.fragments.BasePatternFragment;
 import com.connorlay.knitgrid.fragments.CreatePatternDialogFragment;
-import com.connorlay.knitgrid.fragments.PatternDetailFragment;
+import com.connorlay.knitgrid.fragments.PatternCreateFragment;
 import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.models.Stitch;
 import com.connorlay.knitgrid.presenters.PatternPresenter;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PatternCreationActivity extends AppCompatActivity implements
-        CreatePatternDialogFragment.PatternCreationListener {
+        CreatePatternDialogFragment.PatternCreationListener, BasePatternFragment.CellSelectedListener {
 
     public static final String PATTERN_CREATE = "PATTERN_CREATE";
 
@@ -56,7 +57,7 @@ public class PatternCreationActivity extends AppCompatActivity implements
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PatternDetailFragment frag = (PatternDetailFragment)
+                    PatternCreateFragment frag = (PatternCreateFragment)
                             getSupportFragmentManager().findFragmentById(R.id.pattern_detail_frame);
                     if (frag == null) {
                         return;
@@ -73,7 +74,7 @@ public class PatternCreationActivity extends AppCompatActivity implements
 
     @OnClick(R.id.save_pattern_button)
     public void savePattern() {
-        PatternDetailFragment frag = (PatternDetailFragment)
+        PatternCreateFragment frag = (PatternCreateFragment)
                 getSupportFragmentManager().findFragmentById(R.id.pattern_detail_frame);
         if (frag == null) {
             return;
@@ -94,21 +95,20 @@ public class PatternCreationActivity extends AppCompatActivity implements
     public void onPatternCreated(Pattern pattern) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        Fragment fragment = PatternDetailFragment.newInstance(
-                new PatternPresenter(pattern),
-                new PatternDetailFragment.CellSelectedListener() {
-                    @Override
-                    public void onCellSelected(int row, int column) {
-                        selectedRow = row;
-                        selectedColumn = column;
-                        showButtonBar();
-                    }
-                });
+        Fragment fragment = PatternCreateFragment.newInstance(
+                new PatternPresenter(pattern));
         transaction.replace(R.id.pattern_detail_frame, fragment);
         transaction.commit();
     }
 
     private void showButtonBar() {
         buttonBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCellSelected(int row, int col) {
+        selectedRow = row;
+        selectedColumn = col;
+        showButtonBar();
     }
 }
