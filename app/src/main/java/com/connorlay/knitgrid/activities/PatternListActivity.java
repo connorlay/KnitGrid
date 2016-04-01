@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
+import android.widget.AdapterView;
 
 import com.connorlay.knitgrid.R;
 import com.connorlay.knitgrid.adapters.PatternRecyclerViewAdapter;
 import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.models.Stitch;
+import com.connorlay.knitgrid.models.StitchPatternRelation;
 
 import java.util.List;
 
@@ -20,9 +23,14 @@ import butterknife.OnClick;
 public class PatternListActivity extends AppCompatActivity {
 
     public static final int REQUEST_CREATE = 1;
+    public static final int CONTEXT_ACTION_DELETE = 100;
+    public static final int CONTEXT_ACTION_EDIT = 101;
+    public static final int REQUEST_EDIT = 200;
 
     @Bind(R.id.row_pattern_recycylerview)
     RecyclerView mRecyclerView;
+
+    PatternRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +40,14 @@ public class PatternListActivity extends AppCompatActivity {
 
         if (isFirstLaunch()) {
             generateDefaultData();
-            getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE).edit().putBoolean("initial_launch", false).commit();
+            getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE).edit().putBoolean
+                    ("initial_launch", false).commit();
         }
 
         List<Pattern> patterns = Pattern.listAll(Pattern.class);
 
-        PatternRecyclerViewAdapter adapter = new PatternRecyclerViewAdapter(patterns, new PatternRecyclerViewAdapter.OnPatternRowClickListener() {
+        adapter = new PatternRecyclerViewAdapter(patterns, new PatternRecyclerViewAdapter
+                .OnPatternRowClickListener() {
             @Override
             public void onPatternRowClick(Pattern pattern) {
                 Intent intent = new Intent(PatternListActivity.this, PatternDetailActivity.class);
@@ -48,10 +58,32 @@ public class PatternListActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(adapter);
+
+        registerForContextMenu(mRecyclerView);
     }
 
     private boolean isFirstLaunch() {
-        return getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE).getBoolean("initial_launch", true);
+        return getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE).getBoolean
+                ("initial_launch", true);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == CONTEXT_ACTION_DELETE) {
+            Pattern selectedItem = adapter.getPattern(adapter.getSelectedPosition());
+            StitchPatternRelation.deleteAll(StitchPatternRelation.class, "pattern = ?",
+                    String.valueOf(selectedItem.getId()));
+            selectedItem.delete();
+            adapter.removeItem(adapter.getSelectedPosition());
+        } else if (item.getItemId() == CONTEXT_ACTION_EDIT) {
+            Pattern selectedItem = adapter.getPattern(adapter.getSelectedPosition());
+            Intent intent = new Intent(this, PatternCreationActivity.class);
+            intent.putExtra(PatternCreationActivity.KEY_EDIT_ITEM, selectedItem);
+            startActivity(intent);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     private void generateDefaultData() {

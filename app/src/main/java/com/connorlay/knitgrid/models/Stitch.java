@@ -6,11 +6,13 @@ import android.os.Parcelable;
 import com.connorlay.knitgrid.R;
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
+
 /**
  * Created by Magisus on 2/13/2016.
  */
 // TODO: This will eventually be the model for a database table to store stitches (SugarORM?)
-public class Stitch extends SugarRecord implements Parcelable {
+public class Stitch extends SugarRecord implements Parcelable, Serializable {
     private String abbreviation;
     private String details;
     private String instructions;

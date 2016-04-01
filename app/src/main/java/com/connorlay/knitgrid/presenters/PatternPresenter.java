@@ -59,7 +59,8 @@ public class PatternPresenter implements Parcelable {
         dest.writeInt(mRows);
         dest.writeInt(mCols);
         // TODO: there is probably a better way to do this without relying on serializers
-        dest.writeSerializable(mStitchGrid); // TODO: this crashes when hitting the back button from the pattern detail fragment
+        dest.writeSerializable(mStitchGrid); // TODO: this crashes when hitting the back button
+        // from the pattern detail fragment
     }
 
     @Override
@@ -104,7 +105,7 @@ public class PatternPresenter implements Parcelable {
     }
 
     public void setShowsEvenRows(boolean showEvenRows) {
-       mShowEvenRows = showEvenRows;
+        mShowEvenRows = showEvenRows;
     }
 
     public Long getPatternId() {
@@ -202,6 +203,8 @@ public class PatternPresenter implements Parcelable {
     public void savePattern() {
         mPattern.save();
         mPatternId = mPattern.getId();
+        StitchPatternRelation.deleteAll(StitchPatternRelation.class, "pattern = ?",
+                String.valueOf(mPattern.getId()));
         for (int i = 0; i < mRows; i++) {
             for (int j = 0; j < mCols; j++) {
                 if (mStitchGrid[i][j] != null) {
