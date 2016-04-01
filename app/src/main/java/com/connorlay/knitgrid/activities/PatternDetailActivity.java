@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.connorlay.knitgrid.R;
-import com.connorlay.knitgrid.fragments.PatternDetailFragment;
+import com.connorlay.knitgrid.fragments.PatternHighlightFragment;
 import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.presenters.PatternPresenter;
 
@@ -25,7 +25,7 @@ public class PatternDetailActivity extends AppCompatActivity {
         PatternPresenter patternPresenter = new PatternPresenter(pattern);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.activity_pattern_detail_content_frame_layout, PatternDetailFragment.newInstance(patternPresenter));
+        transaction.replace(R.id.activity_pattern_detail_content_frame_layout, PatternHighlightFragment.newInstance(patternPresenter));
         transaction.commit();
     }
 }
