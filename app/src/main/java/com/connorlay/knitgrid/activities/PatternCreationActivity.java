@@ -28,6 +28,7 @@ public class PatternCreationActivity extends AppCompatActivity implements
         CreatePatternDialogFragment.PatternCreationListener, BasePatternFragment.CellSelectedListener {
 
     public static final String PATTERN_CREATE = "PATTERN_CREATE";
+    public static final String KEY_EDIT_ITEM = "EDIT_ITEM";
 
     @Bind(R.id.stitch_button_bar)
     GridLayout buttonBar;
@@ -41,10 +42,13 @@ public class PatternCreationActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_pattern_creation);
         ButterKnife.bind(this);
 
-        CreatePatternDialogFragment dialog = new CreatePatternDialogFragment();
-        dialog.show(getSupportFragmentManager(), "create_dialog");
-
-        // TODO support editing
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(KEY_EDIT_ITEM)) {
+            Pattern pattern = (Pattern) getIntent().getParcelableExtra(KEY_EDIT_ITEM);
+            onPatternCreated(pattern);
+        } else {
+            CreatePatternDialogFragment dialog = new CreatePatternDialogFragment();
+            dialog.show(getSupportFragmentManager(), "create_dialog");
+        }
 
         buildButtonBar();
     }
