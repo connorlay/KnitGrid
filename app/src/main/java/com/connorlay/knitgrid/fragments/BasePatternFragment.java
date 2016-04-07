@@ -142,8 +142,8 @@ public abstract class BasePatternFragment extends Fragment {
         Point point = new Point();
         display.getSize(point);
 
-        float dp = PATTERN_GRID_PADDING / getResources().getDisplayMetrics().density;
-        return (int) ((point.x - 2 * dp) / columns + 0.5f);
+        float paddingWidthDp = PATTERN_GRID_PADDING / getResources().getDisplayMetrics().density;
+        return (int) ((point.x - 2 * paddingWidthDp) / columns + 0.5f);
     }
 
     private int convertToPixels(float dp) {

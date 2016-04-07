@@ -1,12 +1,16 @@
 package com.connorlay.knitgrid.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
 
@@ -25,7 +29,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PatternCreationActivity extends AppCompatActivity implements
-        CreatePatternDialogFragment.PatternCreationListener, BasePatternFragment.CellSelectedListener {
+        CreatePatternDialogFragment.PatternCreationListener, BasePatternFragment
+        .CellSelectedListener {
 
     public static final String PATTERN_CREATE = "PATTERN_CREATE";
     public static final String KEY_EDIT_ITEM = "EDIT_ITEM";
@@ -69,10 +74,28 @@ public class PatternCreationActivity extends AppCompatActivity implements
                     frag.setStitch(selectedRow, selectedColumn, stitch);
                 }
             });
-            // TODO size should be screen width / 4 ish
-            buttonBar.addView(button, 70, 70);
+            int buttonWidth = calculateButtonWidth(2);
+            buttonBar.addView(button, buttonWidth, buttonWidth);
         }
+        int padding = dpToPx(BasePatternFragment.PATTERN_GRID_PADDING);
+        buttonBar.setPadding(padding, padding, padding, padding);
         buttonBar.setVisibility(View.GONE);
+    }
+
+    private int calculateButtonWidth(int buttonPadding) {
+        WindowManager windowManager = (WindowManager) getSystemService(Context
+                .WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+
+        Point point = new Point();
+        display.getSize(point);
+
+        float px = dpToPx(BasePatternFragment.PATTERN_GRID_PADDING);
+        return (int) ((point.x - 2 * px) / buttonBar.getColumnCount() - dpToPx(2 * buttonPadding) - 0.5f);
+    }
+
+    private int dpToPx(int dp) {
+        return (int)(dp / getResources().getDisplayMetrics().density + 0.5f);
     }
 
     @OnClick(R.id.save_pattern_button)
