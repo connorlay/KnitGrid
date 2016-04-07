@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,10 @@ import android.widget.ImageView;
 
 import com.connorlay.knitgrid.R;
 import com.connorlay.knitgrid.models.Stitch;
+import com.connorlay.knitgrid.models.StitchPatternRelation;
 import com.connorlay.knitgrid.presenters.PatternPresenter;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindColor;
@@ -82,7 +86,7 @@ public abstract class BasePatternFragment extends Fragment {
         }
     }
 
-    protected void bindCellListener(final CellSelectedListener listener) {
+    protected void bindCellListener(final CellSelectedListener listener, final CellSelectedListener listenerLongClick) {
         for (int i = 0; i < mPatternPresenter.getRows(); i++) {
             for (int j = 0; j < mPatternPresenter.getColumns(); j++) {
                 final int row = i;
@@ -94,6 +98,17 @@ public abstract class BasePatternFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         listener.onCellSelected(row, col);
+                    }
+                });
+                cell.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        listenerLongClick.onCellSelected(row, col);
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        MulticolorFragment mcf = MulticolorFragment.newInstance(BasePatternFragment.this, row, col);
+                        mcf.show(fm, "BasePatternFragment");
+
+                        return false;
                     }
                 });
             }
@@ -127,6 +142,13 @@ public abstract class BasePatternFragment extends Fragment {
     protected void setGridBackgroundColor(int color) {
         for (int i = 0; i < mGridLayout.getChildCount(); i++) {
             mGridLayout.getChildAt(i).setBackgroundColor(color);
+        }
+    }
+
+    protected void setGridBackgroundMultiColor(){
+        List<StitchPatternRelation> list = mPatternPresenter.getPattern().getStitchRelations();
+        for (StitchPatternRelation s: list){
+            mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(s.getColorID());
         }
     }
 

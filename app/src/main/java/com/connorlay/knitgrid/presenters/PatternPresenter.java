@@ -19,6 +19,7 @@ public class PatternPresenter implements Parcelable {
     private Pattern mPattern;
     private boolean mShowEvenRows;
     private Long mPatternId;
+    private StitchPatternRelation[][] mStitchPatternRelations;
 
     public PatternPresenter(int rows, int cols, boolean showEvenRows) {
         mRows = rows;

@@ -3,6 +3,7 @@ package com.connorlay.knitgrid.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.connorlay.knitgrid.R;
 import com.orm.SugarRecord;
 
 /**
@@ -12,6 +13,7 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
     private Pattern pattern;
     private Stitch stitch;
     private int row, col;
+    private int colorID;
 
     public StitchPatternRelation() {
 
@@ -22,6 +24,7 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
         this.stitch = stitch;
         this.row = row;
         this.col = column;
+        colorID = R.color.cellHighlight;
     }
 
     protected StitchPatternRelation(Parcel in) {
@@ -29,6 +32,7 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
         this.stitch = in.readParcelable(Stitch.class.getClassLoader());
         this.row = in.readInt();
         this.col = in.readInt();
+        this.colorID = in.readInt();
     }
 
     @Override
@@ -37,6 +41,7 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
         dest.writeParcelable(stitch, flags);
         dest.writeInt(row);
         dest.writeInt(col);
+        dest.writeInt(colorID);
     }
 
     @Override
@@ -87,4 +92,14 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
     public void setCol(int col) {
         this.col = col;
     }
+
+    public int getColorID() {
+        return colorID;
+    }
+
+    public void setColorID(int colorID) {
+        this.colorID = colorID;
+    }
+
+
 }

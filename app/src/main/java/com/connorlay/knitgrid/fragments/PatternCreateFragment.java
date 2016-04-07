@@ -30,7 +30,15 @@ public class PatternCreateFragment extends BasePatternFragment {
         bindCellListener(new CellSelectedListener() {
             @Override
             public void onCellSelected(int row, int col) {
-                setGridBackgroundColor(mCellDefaultColor);
+                //setGridBackgroundColor(mCellDefaultColor);
+                setGridBackgroundMultiColor();
+                listener.onCellSelected(row, col);
+                mGridLayout.getChildAt(row * mPatternPresenter.getColumns() + col).setBackgroundColor(mCellHighlightColor);
+            }
+        }, new CellSelectedListener() {
+            @Override
+            public void onCellSelected(int row, int col) {
+                setGridBackgroundMultiColor();
                 listener.onCellSelected(row, col);
                 mGridLayout.getChildAt(row * mPatternPresenter.getColumns() + col).setBackgroundColor(mCellHighlightColor);
             }
