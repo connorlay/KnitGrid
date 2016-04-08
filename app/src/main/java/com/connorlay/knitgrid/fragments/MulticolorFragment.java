@@ -11,9 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.connorlay.knitgrid.R;
-import com.connorlay.knitgrid.models.StitchPatternRelation;
-
-import java.util.List;
+import com.connorlay.knitgrid.presenters.PatternPresenter;
 
 /**
  * Created by Greg on 4/5/2016.
@@ -47,14 +45,7 @@ public class MulticolorFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final List<StitchPatternRelation> list = basePatternFragment.mPatternPresenter.getPattern().getStitchRelations();
-        StitchPatternRelation stitchPatternRelation = null;
-        for (StitchPatternRelation s: list){
-            if (s.getCol() == col && s.getRow() == row){
-                stitchPatternRelation = s;
-            }
-        }
-        final int index = list.indexOf(stitchPatternRelation);
+        final PatternPresenter patternPresenter = basePatternFragment.mPatternPresenter;
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_multicolor, null);
         AlertDialog builder = new AlertDialog.Builder(getActivity())
                 .setView(rootView)
@@ -62,15 +53,15 @@ public class MulticolorFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
-                            list.get(index).setColorID(R.color.Red);
+                            patternPresenter.setStitchColor(R.color.Red, row, col);
                         } else if (which == 1) {
-                            list.get(index).setColorID(R.color.Yellow);
+                            patternPresenter.setStitchColor(R.color.Yellow, row, col);
                         } else if (which == 2) {
-                            list.get(index).setColorID(R.color.Blue);
+                            patternPresenter.setStitchColor(R.color.Blue, row, col);
                         } else if (which == 3) {
-                            list.get(index).setColorID(R.color.Purple);
+                            patternPresenter.setStitchColor(R.color.Purple, row, col);
                         } else if (which == 4) {
-                            list.get(index).setColorID(R.color.White);
+                            patternPresenter.setStitchColor(R.color.White, row, col);
                         }
                     }
                 })

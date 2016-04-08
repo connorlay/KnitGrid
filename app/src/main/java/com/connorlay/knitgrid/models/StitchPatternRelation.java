@@ -24,7 +24,15 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
         this.stitch = stitch;
         this.row = row;
         this.col = column;
-        colorID = R.color.cellHighlight;
+        colorID = R.color.cellDefault;
+    }
+
+    public StitchPatternRelation(Pattern pattern, Stitch stitch, int row, int column, int colorID) {
+        this.pattern = pattern;
+        this.stitch = stitch;
+        this.row = row;
+        this.col = column;
+        this.colorID = colorID;
     }
 
     protected StitchPatternRelation(Parcel in) {

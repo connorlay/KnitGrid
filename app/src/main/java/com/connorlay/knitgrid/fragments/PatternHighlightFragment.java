@@ -8,10 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.connorlay.knitgrid.models.StitchPatternRelation;
 import com.connorlay.knitgrid.presenters.PatternPresenter;
-
-import java.util.List;
 
 /**
  * Created by connorlay on 3/29/16.
@@ -19,7 +16,6 @@ import java.util.List;
 public class PatternHighlightFragment extends BasePatternFragment {
     public static final String HIGHLIGHT_ROW_KEY = "_highlight_row";
     public static final String HIGHLIGHT_COLUMN_KEY = "_highlight_column";
-    private StitchPatternRelation[][] stitchPatternRelations;
 
     public static PatternHighlightFragment newInstance(PatternPresenter patternPresenter) {
         PatternHighlightFragment fragment = new PatternHighlightFragment();
@@ -48,8 +44,6 @@ public class PatternHighlightFragment extends BasePatternFragment {
         });
 
         Long patternId = mPatternPresenter.getPatternId();
-        stitchPatternRelations = new StitchPatternRelation[mPatternPresenter.getRows()][mPatternPresenter.getColumns()];
-        populateColors();
         if (patternId != null) {
             int[] highlightCoords = getHighlightPrefs(mPatternPresenter.getPatternId().toString());
             highlightUpToCell(highlightCoords[0], highlightCoords[1]);
@@ -57,18 +51,10 @@ public class PatternHighlightFragment extends BasePatternFragment {
         return rootView;
     }
 
-    private void populateColors(){
-        final List<StitchPatternRelation> list = mPatternPresenter.getPattern().getStitchRelations();
-        for (StitchPatternRelation s: list){
-            stitchPatternRelations[s.getRow()][s.getCol()] = s;
-        }
-    }
-
     private void highlightUpToCell(int row, int column) {
         int defaultUpToIndex = row * mPatternPresenter.getColumns();
         int pivotIndex = defaultUpToIndex + column;
         int highlightAfterIndex = (row + 1) * mPatternPresenter.getColumns();
-
         for (int i = 0; i < mPatternPresenter.getRows() * mPatternPresenter.getColumns(); i += 1) {
             ImageView cell = (ImageView) mGridLayout.getChildAt(i);
 
@@ -76,13 +62,13 @@ public class PatternHighlightFragment extends BasePatternFragment {
                 if (i < defaultUpToIndex || i > pivotIndex && i < highlightAfterIndex) {
                     cell.setBackgroundColor(mCellDefaultColor);
                 } else {
-                    cell.setBackgroundColor(stitchPatternRelations[row][column].getColorID());
+                    cell.setBackgroundColor(mCellHighlightColor);
                 }
             } else {
                 if (i < pivotIndex) {
                     cell.setBackgroundColor(mCellDefaultColor);
                 } else {
-                    cell.setBackgroundColor(stitchPatternRelations[row][column].getColorID());
+                    cell.setBackgroundColor(mCellHighlightColor);
                 }
             }
         }

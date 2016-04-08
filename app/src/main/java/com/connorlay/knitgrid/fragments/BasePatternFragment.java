@@ -149,6 +149,7 @@ public abstract class BasePatternFragment extends Fragment {
         List<StitchPatternRelation> list = mPatternPresenter.getPattern().getStitchRelations();
         for (StitchPatternRelation s: list){
             mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(s.getColorID());
+            mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(s.getColorID());
         }
     }
 

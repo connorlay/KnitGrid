@@ -19,7 +19,6 @@ public class PatternPresenter implements Parcelable {
     private Pattern mPattern;
     private boolean mShowEvenRows;
     private Long mPatternId;
-    private StitchPatternRelation[][] mStitchPatternRelations;
 
     public PatternPresenter(int rows, int cols, boolean showEvenRows) {
         mRows = rows;
@@ -111,6 +110,10 @@ public class PatternPresenter implements Parcelable {
 
     public Long getPatternId() {
         return mPatternId;
+    }
+
+    public void setStitchColor(int colorID, int row, int col){
+        mStitchGrid[row][col].setColorID(colorID);
     }
 
     @Override
@@ -209,7 +212,8 @@ public class PatternPresenter implements Parcelable {
         for (int i = 0; i < mRows; i++) {
             for (int j = 0; j < mCols; j++) {
                 if (mStitchGrid[i][j] != null) {
-                    new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j).save();
+                    //new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j).save();
+                    new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j, mStitchGrid[i][j].getColorID()).save();
                 }
             }
         }
