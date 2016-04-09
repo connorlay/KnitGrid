@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorTitleText">#414141</color>
+    <color name="colorPrimary">#A7FF91</color>
+    <color name="colorPrimaryDark">#6FC959</color>
+    <color name="colorAccent">#FF91B7</color>
     <color name="cellDefault">#FFFFFF</color>
     <color name="cellHighlight">#2e7d32</color>
     <color name="Yellow">#BABA34</color>
@@ -10,4 +11,8 @@
     <color name="Red">#D61132</color>
     <color name="Purple">#FA02E5</color>
     <color name="White">#FFFFFE</color>
+    <color name="colorPrimaryTextPastel">#de3c3c3c</color>
+    <color name="foregroundPastel">#313131</color>
+    <color name="colorSecondaryTextPastel">#353535</color>
+>>>>>>> Color scheme, messing with Action Bar.
 </resources>

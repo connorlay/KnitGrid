@@ -74,7 +74,9 @@ public class PatternCreationActivity extends AppCompatActivity implements
                     frag.setStitch(selectedRow, selectedColumn, stitch);
                 }
             });
-            int buttonWidth = calculateButtonWidth(2);
+            int buttonPadding = dpToPx(3);
+            button.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            int buttonWidth = calculateButtonWidth(buttonPadding);
             buttonBar.addView(button, buttonWidth, buttonWidth);
         }
         int padding = dpToPx(BasePatternFragment.PATTERN_GRID_PADDING);
@@ -91,7 +93,7 @@ public class PatternCreationActivity extends AppCompatActivity implements
         display.getSize(point);
 
         float px = dpToPx(BasePatternFragment.PATTERN_GRID_PADDING);
-        return (int) ((point.x - 2 * px) / buttonBar.getColumnCount() - dpToPx(2 * buttonPadding) - 0.5f);
+        return (int) ((point.x - 2 * px) / buttonBar.getColumnCount() - (2 * buttonPadding));
     }
 
     private int dpToPx(int dp) {

@@ -23,7 +23,8 @@ public class PatternCreateFragment extends BasePatternFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
         final CellSelectedListener listener = (CellSelectedListener) getActivity();
@@ -48,7 +49,8 @@ public class PatternCreateFragment extends BasePatternFragment {
                 setGridBackgroundColor(mCellDefaultColor);
                 setGridBackgroundMultiColor();
                 listener.onCellSelected(row, col);
-                mGridLayout.getChildAt(row * mPatternPresenter.getColumns() + col).setBackgroundColor(mCellHighlightColor);
+                mGridLayout.getChildAt(row * mPatternPresenter.getColumns() + col)
+                        .setBackgroundColor(mCellHighlightColor);
             }
         });
 
