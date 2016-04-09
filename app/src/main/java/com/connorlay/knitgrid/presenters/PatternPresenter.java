@@ -44,6 +44,7 @@ public class PatternPresenter implements Parcelable {
             int column = stitchPatternRelation.getCol();
             Stitch stitch = stitchPatternRelation.getStitch();
             mStitchGrid[row][column] = stitch;
+            mStitchGrid[row][column].setColorID(stitchPatternRelation.getColorID());
         }
     }
 
@@ -117,12 +118,9 @@ public class PatternPresenter implements Parcelable {
             savePattern();
             return;
         }
-        mStitchGrid[row][col].setPendintColorID(colorID);
+        mStitchGrid[row][col].setColorID(colorID);
     }
 
-    public void finilizeStitchColor(int row, int col){
-        mStitchGrid[row][col].setColorID(mStitchGrid[row][col].getPendintColorID());
-    }
 
     @Override
     public String toString() {
@@ -221,24 +219,10 @@ public class PatternPresenter implements Parcelable {
             for (int j = 0; j < mCols; j++) {
                 if (mStitchGrid[i][j] != null) {
                     //new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j).save();
-                    finilizeStitchColor(i, j);
                     new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j, mStitchGrid[i][j].getColorID()).save();
                 }
             }
         }
     }
 
-    public void quickSavePattern(int row, int col) {
-        new StitchPatternRelation(mPattern, mStitchGrid[row][col], row, col, mStitchGrid[row][col].getPendintColorID()).save();
-    }
-
-    public void canclePattern() {
-        for (int i = 0; i < mRows; i++) {
-            for (int j = 0; j < mCols; j++) {
-                if (mStitchGrid[i][j] != null) {
-                    new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j, mStitchGrid[i][j].getColorID()).save();
-                }
-            }
-        }
-    }
 }

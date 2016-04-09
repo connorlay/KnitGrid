@@ -165,9 +165,22 @@ public abstract class BasePatternFragment extends Fragment {
 
     protected void setGridBackgroundMultiColor(){
         List<StitchPatternRelation> list = mPatternPresenter.getPattern().getStitchRelations();
-        for (StitchPatternRelation s: list){
-            mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(s.getColorID());
-            mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(s.getColorID());
+        for (StitchPatternRelation s: list) {
+            int oldColor = s.getColorID();
+            int newColor = mPatternPresenter.getStitch(s.getRow(), s.getCol()).getColorID();
+            if (oldColor != newColor && newColor != mCellDefaultColor && oldColor != mCellDefaultColor) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(newColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(newColor);
+            } else if (oldColor != newColor && newColor == mCellDefaultColor && oldColor != mCellDefaultColor) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(oldColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(oldColor);
+            } else if (oldColor != newColor && newColor != mCellDefaultColor && oldColor == mCellDefaultColor) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(newColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(newColor);
+            } else if (oldColor == newColor) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(oldColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(oldColor);
+            }
         }
     }
 

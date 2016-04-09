@@ -23,17 +23,6 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
     @Ignore
     private int colorID;
 
-    public int getPendintColorID() {
-        return pendintColorID;
-    }
-
-    public void setPendintColorID(int pendintColorID) {
-        this.pendintColorID = pendintColorID;
-    }
-
-    @Ignore
-    private int pendintColorID;
-
     public Stitch() {
 
     }

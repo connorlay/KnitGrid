@@ -63,10 +63,21 @@ public class MulticolorFragment extends DialogFragment {
                         } else if (which == 4) {
                             patternPresenter.setStitchColor(basePatternFragment.white, row, col);
                         }
-                        patternPresenter.quickSavePattern(row, col);
                     }
                 })
-                .create();
+                .setPositiveButton("Ok", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        PatternCreateFragment frag = (PatternCreateFragment)
+                                getActivity().getSupportFragmentManager().findFragmentById(R.id.pattern_detail_frame);
+                        if (frag == null) {
+                            return;
+                        }
+
+                        frag.setStitch(row, col, patternPresenter.getStitch(row,col));
+
+                    }
+                }).create();
         return builder;
     }
 

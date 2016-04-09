@@ -91,13 +91,6 @@ public class PatternCreationActivity extends AppCompatActivity implements
 
     @OnClick(R.id.cancel_pattern_creation_button)
     public void cancelPattern() {
-        PatternCreateFragment frag = (PatternCreateFragment)
-                getSupportFragmentManager().findFragmentById(R.id.pattern_detail_frame);
-        if (frag == null) {
-            return;
-        }
-
-        frag.canclePattern();
         Intent intent = new Intent(this, PatternListActivity.class);
         startActivity(intent);
     }
