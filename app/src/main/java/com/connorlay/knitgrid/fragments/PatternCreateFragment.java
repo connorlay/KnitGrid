@@ -59,4 +59,8 @@ public class PatternCreateFragment extends BasePatternFragment {
     public void savePattern() {
         mPatternPresenter.savePattern();
     }
+
+    public void canclePattern() {
+        mPatternPresenter.canclePattern();
+    }
 }
