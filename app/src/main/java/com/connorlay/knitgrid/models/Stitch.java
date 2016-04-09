@@ -44,6 +44,7 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
         this.instructions = instructions;
         this.iconID = iconID;
         this.isDefault = isDefault;
+        colorID = R.color.cellDefault;
 
     }
 

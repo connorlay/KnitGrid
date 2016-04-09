@@ -95,7 +95,9 @@ public abstract class BasePatternFragment extends Fragment {
                     cellImageView.setImageResource(stitch.getIconID());
                 }
 
-                cellImageView.setBackgroundColor(mCellDefaultColor);
+                if (stitch != null){
+                    cellImageView.setBackgroundColor(stitch.getColorID());
+                }
 
                 mGridLayout.addView(cellImageView, cellSize, cellSize);
             }

@@ -222,4 +222,9 @@ public class PatternPresenter implements Parcelable {
             }
         }
     }
+
+    public void quickSavePattern(int row, int col) {
+        mPattern.save();
+        new StitchPatternRelation(mPattern, mStitchGrid[row][col], row, col, mStitchGrid[row][col].getColorID()).save();
+    }
 }

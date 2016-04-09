@@ -63,6 +63,7 @@ public class MulticolorFragment extends DialogFragment {
                         } else if (which == 4) {
                             patternPresenter.setStitchColor(basePatternFragment.white, row, col);
                         }
+                        patternPresenter.quickSavePattern(row, col);
                     }
                 })
                 .create();
