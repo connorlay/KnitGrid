@@ -12,4 +12,5 @@
     <string name="create_pattern_dialog_title">Create Pattern</string>
     <string name="create_pattern_dialog_positive_button">Create</string>
     <string name="show_even_rows_checkbox_label">Show even rows</string>
+    <string name="knit">knit</string>
 </resources>
