@@ -53,15 +53,15 @@ public class MulticolorFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
-                            patternPresenter.setStitchColor(R.color.Red, row, col);
+                            patternPresenter.setStitchColor(basePatternFragment.red, row, col);
                         } else if (which == 1) {
-                            patternPresenter.setStitchColor(R.color.Yellow, row, col);
+                            patternPresenter.setStitchColor(basePatternFragment.yellow, row, col);
                         } else if (which == 2) {
-                            patternPresenter.setStitchColor(R.color.Blue, row, col);
+                            patternPresenter.setStitchColor(basePatternFragment.blue, row, col);
                         } else if (which == 3) {
-                            patternPresenter.setStitchColor(R.color.Purple, row, col);
+                            patternPresenter.setStitchColor(basePatternFragment.purple, row, col);
                         } else if (which == 4) {
-                            patternPresenter.setStitchColor(R.color.White, row, col);
+                            patternPresenter.setStitchColor(basePatternFragment.white, row, col);
                         }
                     }
                 })

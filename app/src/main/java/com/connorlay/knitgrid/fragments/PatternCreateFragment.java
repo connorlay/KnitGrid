@@ -52,7 +52,7 @@ public class PatternCreateFragment extends BasePatternFragment {
         ImageView cell = (ImageView) mGridLayout.getChildAt(row * mGridLayout.getColumnCount() +
                 column);
         cell.setImageResource(stitch.getIconID());
-        cell.setBackgroundColor(mCellDefaultColor);
+        cell.setBackgroundColor(stitch.getColorID());
     }
 
 

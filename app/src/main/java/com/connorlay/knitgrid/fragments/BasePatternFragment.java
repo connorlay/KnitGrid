@@ -44,6 +44,22 @@ public abstract class BasePatternFragment extends Fragment {
     @BindColor(R.color.cellHighlight)
     int mCellHighlightColor;
 
+    @BindColor(R.color.Red)
+    int red;
+
+    @BindColor(R.color.Yellow)
+    int yellow;
+
+    @BindColor(R.color.Blue)
+    int blue;
+
+    @BindColor(R.color.Purple)
+    int purple;
+
+    @BindColor(R.color.White)
+    int white;
+
+
     protected PatternPresenter mPatternPresenter;
 
     @Override
