@@ -46,6 +46,7 @@ public class MulticolorFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final PatternPresenter patternPresenter = basePatternFragment.mPatternPresenter;
+        final int color = patternPresenter.getStitch(row,col).getColorID();
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_multicolor, null);
         AlertDialog builder = new AlertDialog.Builder(getActivity())
                 .setView(rootView)
@@ -65,7 +66,7 @@ public class MulticolorFragment extends DialogFragment {
                         }
                     }
                 })
-                .setPositiveButton("Ok", new OnClickListener() {
+                .setPositiveButton(getString(R.string.okay), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         PatternCreateFragment frag = (PatternCreateFragment)
@@ -74,8 +75,14 @@ public class MulticolorFragment extends DialogFragment {
                             return;
                         }
 
-                        frag.setStitch(row, col, patternPresenter.getStitch(row,col));
+                        frag.setStitch(row, col, patternPresenter.getStitch(row, col));
 
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        patternPresenter.setStitchColor(color, row, col);
                     }
                 }).create();
         return builder;
