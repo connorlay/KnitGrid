@@ -26,6 +26,7 @@ public class PatternDetailActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_detail_view);
+        getSupportActionBar().hide();
         ButterKnife.bind(this);
 
         pattern = getIntent().getParcelableExtra(ARG_PATTERN);

@@ -3,9 +3,8 @@
     <color name="colorTitleText">#414141</color>
     <color name="colorPrimary">#A7FF91</color>
     <color name="colorPrimaryDark">#6FC959</color>
-    <color name="colorAccent">#FF91B7</color>
+    <color name="colorAccent">#FF91DB</color>
     <color name="cellDefault">#FFFFFF</color>
-    <color name="cellHighlight">#2e7d32</color>
     <color name="Yellow">#BABA34</color>
     <color name="Blue">#3434BA</color>
     <color name="Red">#D61132</color>
@@ -14,5 +13,6 @@
     <color name="colorPrimaryTextPastel">#de3c3c3c</color>
     <color name="foregroundPastel">#313131</color>
     <color name="colorSecondaryTextPastel">#353535</color>
->>>>>>> Color scheme, messing with Action Bar.
+    <color name="cellHighlight">#FFBD91</color>
+    <color name="patternViewBackground">#e8ffdb</color>
 </resources>

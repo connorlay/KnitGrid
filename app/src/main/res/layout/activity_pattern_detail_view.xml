@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="@color/patternViewBackground"
     tools:context=".activities.PatternDetailActivity">
 
     <LinearLayout
@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:elevation="7dp">
 
         <Button
             android:id="@+id/activity_pattern_detail_pattern_button"
