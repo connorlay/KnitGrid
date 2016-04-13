@@ -1,6 +1,7 @@
 package com.connorlay.knitgrid.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,9 @@ public class PatternCreateFragment extends BasePatternFragment {
         }, new CellSelectedListener() {
             @Override
             public void onCellSelected(int row, int col) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                MulticolorFragment mcf = MulticolorFragment.newInstance(PatternCreateFragment.this, row, col);
+                mcf.show(fm, "BasePatternFragment");
                 setGridBackgroundMultiColor();
                 listener.onCellSelected(row, col);
                 mGridLayout.getChildAt(row * mPatternPresenter.getColumns() + col).setBackgroundColor(mCellHighlightColor);
