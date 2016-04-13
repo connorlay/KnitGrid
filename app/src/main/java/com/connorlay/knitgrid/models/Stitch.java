@@ -13,11 +13,12 @@ import java.io.Serializable;
  */
 // TODO: This will eventually be the model for a database table to store stitches (SugarORM?)
 public class Stitch extends SugarRecord implements Parcelable, Serializable {
-    String abbreviation;
-    String details;
-    String instructions;
-    int iconID;
-    boolean isDefault;
+    private String abbreviation;
+    private String details;
+    private String instructions;
+    private int iconID;
+    private boolean isDefault;
+    private int uuid;
 
     public Stitch() {
 
@@ -68,6 +69,10 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
         }
     };
 
+    public int getUuid() {
+        return uuid;
+    }
+
     public String getAbbreviation() {
         return abbreviation;
     }
@@ -100,7 +105,7 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {

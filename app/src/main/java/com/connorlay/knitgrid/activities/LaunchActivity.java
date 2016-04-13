@@ -1,15 +1,14 @@
 package com.connorlay.knitgrid.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.connorlay.knitgrid.R;
 import com.connorlay.knitgrid.models.Stitch;
 import com.connorlay.knitgrid.networking.KnitGridAPI;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -47,7 +46,7 @@ public class LaunchActivity extends AppCompatActivity {
             public void onResponse(Call<List<Stitch>> call, Response<List<Stitch>> response) {
                 for (Stitch stitch : response.body()) {
                     switch (stitch.getAbbreviation()) {
-                        case "K1":
+                        case "K1": // TODO: make stitch names more consistent
                             stitch.setIconID(R.drawable.k);
                             break;
                         case "p":

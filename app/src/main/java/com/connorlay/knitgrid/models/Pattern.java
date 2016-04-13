@@ -3,13 +3,9 @@ package com.connorlay.knitgrid.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
 import java.util.List;
-
-import io.gsonfire.annotations.ExposeMethodResult;
 
 /**
  * Created by connorlay on 3/17/16.
@@ -17,17 +13,17 @@ import io.gsonfire.annotations.ExposeMethodResult;
 public class Pattern extends SugarRecord implements Parcelable {
     private String name;
     private int rows;
-    private int cols;
+    private int columns;
     private boolean showEvenRows;
+    private int uuid;
 
     public Pattern() {
-
     }
 
     public Pattern(String name, int rows, int columns, boolean showEvenRows) {
         this.name = name;
         this.rows = rows;
-        this.cols = columns;
+        this.columns = columns;
         this.showEvenRows = showEvenRows;
     }
 
@@ -35,7 +31,7 @@ public class Pattern extends SugarRecord implements Parcelable {
         setId(in.readLong());
         name = in.readString();
         rows = in.readInt();
-        cols = in.readInt();
+        columns = in.readInt();
         showEvenRows = in.readByte() != 0;
     }
 
@@ -44,7 +40,7 @@ public class Pattern extends SugarRecord implements Parcelable {
         dest.writeLong(getId());
         dest.writeString(name);
         dest.writeInt(rows);
-        dest.writeInt(cols);
+        dest.writeInt(columns);
         dest.writeByte((byte) (showEvenRows ? 1 : 0));
     }
 
@@ -69,12 +65,16 @@ public class Pattern extends SugarRecord implements Parcelable {
         return name;
     }
 
+    public int getUuid() {
+        return uuid;
+    }
+
     public int getRows() {
         return rows;
     }
 
     public int getColumns() {
-        return cols;
+        return columns;
     }
 
     public boolean showsEvenRows() {
@@ -90,7 +90,7 @@ public class Pattern extends SugarRecord implements Parcelable {
     }
 
     public void setColumns(int columns) {
-        this.cols = columns;
+        this.columns = columns;
     }
 
     public void setShowsEvenRows(boolean showEvenRows) {

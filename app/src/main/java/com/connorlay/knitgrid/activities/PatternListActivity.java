@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 
 import com.connorlay.knitgrid.R;
 import com.connorlay.knitgrid.adapters.PatternRecyclerViewAdapter;
@@ -15,14 +14,15 @@ import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.models.Stitch;
 import com.connorlay.knitgrid.models.StitchPatternRelation;
 import com.connorlay.knitgrid.networking.KnitGridAPI;
+import com.connorlay.knitgrid.serializers.PatternSerializer;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.gsonfire.GsonFireBuilder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,8 +90,12 @@ public class PatternListActivity extends AppCompatActivity {
     }
 
     private void publishPattern(Pattern pattern) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Pattern.class, new PatternSerializer());
+        Gson gson = gsonBuilder.create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://knitgrid-api.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         KnitGridAPI api = retrofit.create(KnitGridAPI.class);
@@ -99,6 +103,7 @@ public class PatternListActivity extends AppCompatActivity {
         api.createPattern(pattern).enqueue(new Callback<Pattern>() {
             @Override
             public void onResponse(Call<Pattern> call, Response<Pattern> response) {
+                // TODO: write custom stitch pattern deserializer
                 Log.d(CREATE_PATTERN_RESPONSE, response.toString());
             }
 

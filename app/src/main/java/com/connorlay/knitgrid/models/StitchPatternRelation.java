@@ -12,9 +12,9 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
     private Pattern pattern;
     private Stitch stitch;
     private int row, col;
+    private int uuid;
 
     public StitchPatternRelation() {
-
     }
 
     public StitchPatternRelation(Pattern pattern, Stitch stitch, int row, int column) {
@@ -55,6 +55,10 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
             return new StitchPatternRelation[size];
         }
     };
+
+    public int getUuid() {
+        return uuid;
+    }
 
     public Pattern getPattern() {
         return pattern;
