@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.connorlay.knitgrid"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.connorlay.knitgrid">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name="com.orm.SugarApp"
@@ -11,28 +14,27 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="DATABASE"
-            android:value="knitgrid.db"/>
+            android:value="knitgrid.db" />
         <meta-data
             android:name="VERSION"
             android:value="8" />
         <meta-data
             android:name="QUERY_LOG"
-            android:value="true"/>
+            android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.connorlay.knitgrid.models"/>
+            android:value="com.connorlay.knitgrid.models" />
 
-        <activity android:name=".activities.PatternListActivity">
+        <activity android:name=".activities.PatternListActivity"/>
+        <activity android:name=".activities.StitchDetailActivity" />
+        <activity android:name=".activities.PatternDetailActivity" />
+        <activity android:name=".activities.PatternCreationActivity"/>
+        <activity android:name=".activities.LaunchActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+               <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.StitchDetailActivity"/>
-        <activity android:name=".activities.PatternDetailActivity"/>
-        <activity android:name=".activities.PatternCreationActivity">
-        </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

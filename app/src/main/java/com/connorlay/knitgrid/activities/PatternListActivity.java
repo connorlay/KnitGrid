@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 
@@ -13,19 +14,29 @@ import com.connorlay.knitgrid.adapters.PatternRecyclerViewAdapter;
 import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.models.Stitch;
 import com.connorlay.knitgrid.models.StitchPatternRelation;
+import com.connorlay.knitgrid.networking.KnitGridAPI;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.gsonfire.GsonFireBuilder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PatternListActivity extends AppCompatActivity {
 
     public static final int REQUEST_CREATE = 1;
     public static final int CONTEXT_ACTION_DELETE = 100;
     public static final int CONTEXT_ACTION_EDIT = 101;
+    public static final int CONTEXT_ACTION_UPLOAD = 102;
     public static final int REQUEST_EDIT = 200;
+    private static final String CREATE_PATTERN_RESPONSE = "CREATE_PATTERN_RESPONSE";
 
     @Bind(R.id.row_pattern_recycylerview)
     RecyclerView mRecyclerView;
@@ -37,12 +48,6 @@ public class PatternListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_list);
         ButterKnife.bind(this);
-
-        if (isFirstLaunch()) {
-            generateDefaultData();
-            getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE).edit().putBoolean
-                    ("initial_launch", false).commit();
-        }
 
         List<Pattern> patterns = Pattern.listAll(Pattern.class);
 
@@ -62,11 +67,6 @@ public class PatternListActivity extends AppCompatActivity {
         registerForContextMenu(mRecyclerView);
     }
 
-    private boolean isFirstLaunch() {
-        return getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE).getBoolean
-                ("initial_launch", true);
-    }
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == CONTEXT_ACTION_DELETE) {
@@ -80,10 +80,33 @@ public class PatternListActivity extends AppCompatActivity {
             Intent intent = new Intent(this, PatternCreationActivity.class);
             intent.putExtra(PatternCreationActivity.KEY_EDIT_ITEM, selectedItem);
             startActivity(intent);
+        } else if (item.getItemId() == CONTEXT_ACTION_UPLOAD) {
+            Pattern selectedItem = adapter.getPattern(adapter.getSelectedPosition());
+            publishPattern(selectedItem);
         } else {
             return false;
         }
         return true;
+    }
+
+    private void publishPattern(Pattern pattern) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://knitgrid-api.herokuapp.com/")
+                .build();
+
+        KnitGridAPI api = retrofit.create(KnitGridAPI.class);
+
+        api.createPattern(pattern).enqueue(new Callback<Pattern>() {
+            @Override
+            public void onResponse(Call<Pattern> call, Response<Pattern> response) {
+                Log.d(CREATE_PATTERN_RESPONSE, response.toString());
+            }
+
+            @Override
+            public void onFailure(Call<Pattern> call, Throwable t) {
+                Log.d(CREATE_PATTERN_RESPONSE, t.getLocalizedMessage());
+            }
+        });
     }
 
     private void generateDefaultData() {

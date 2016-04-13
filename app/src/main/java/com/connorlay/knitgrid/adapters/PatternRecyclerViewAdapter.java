@@ -91,6 +91,7 @@ public class PatternRecyclerViewAdapter extends RecyclerView.Adapter<PatternRecy
                     menu.setHeaderTitle("Menu");
                     menu.add(0, PatternListActivity.CONTEXT_ACTION_DELETE, 0, "Delete");
                     menu.add(0, PatternListActivity.CONTEXT_ACTION_EDIT, 0, "Edit");
+                    menu.add(0, PatternListActivity.CONTEXT_ACTION_UPLOAD, 0, "Publish");
                 }
 
             });

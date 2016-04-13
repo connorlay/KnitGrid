@@ -3,9 +3,13 @@ package com.connorlay.knitgrid.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.List;
+
+import io.gsonfire.annotations.ExposeMethodResult;
 
 /**
  * Created by connorlay on 3/17/16.

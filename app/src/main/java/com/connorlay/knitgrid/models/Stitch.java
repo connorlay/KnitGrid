@@ -13,11 +13,11 @@ import java.io.Serializable;
  */
 // TODO: This will eventually be the model for a database table to store stitches (SugarORM?)
 public class Stitch extends SugarRecord implements Parcelable, Serializable {
-    private String abbreviation;
-    private String details;
-    private String instructions;
-    private int iconID;
-    private boolean isDefault;
+    String abbreviation;
+    String details;
+    String instructions;
+    int iconID;
+    boolean isDefault;
 
     public Stitch() {
 
