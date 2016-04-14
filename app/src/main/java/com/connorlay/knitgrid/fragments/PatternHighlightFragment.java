@@ -46,6 +46,7 @@ public class PatternHighlightFragment extends BasePatternFragment {
     }
 
     private void highlightUpToCell(int row, int column) {
+        setGridBackgroundMultiColor();
         int defaultUpToIndex = row * mPatternPresenter.getColumns();
         int pivotIndex = defaultUpToIndex + column;
         int highlightAfterIndex = (row + 1) * mPatternPresenter.getColumns();
@@ -54,13 +55,13 @@ public class PatternHighlightFragment extends BasePatternFragment {
 
             if (mPatternPresenter.showsEvenRows() && row % 2 == 0) {
                 if (i < defaultUpToIndex || i > pivotIndex && i < highlightAfterIndex) {
-                    cell.setBackgroundColor(mCellDefaultColor);
+
                 } else {
                     cell.setBackgroundColor(mCellHighlightColor);
                 }
             } else {
                 if (i < pivotIndex) {
-                    cell.setBackgroundColor(mCellDefaultColor);
+
                 } else {
                     cell.setBackgroundColor(mCellHighlightColor);
                 }
