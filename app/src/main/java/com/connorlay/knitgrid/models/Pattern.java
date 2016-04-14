@@ -99,7 +99,6 @@ public class Pattern extends SugarRecord implements Parcelable {
 
     public void setStitch(Stitch stitch, int row, int column) {
         // TODO: support editing an existing stitch relation?
-        //new StitchPatternRelation(this, stitch, row, column).save();
         new StitchPatternRelation(this, stitch, row, column, stitch.getColorID()).save();
 
     }

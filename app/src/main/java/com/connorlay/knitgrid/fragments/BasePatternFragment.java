@@ -163,20 +163,36 @@ public abstract class BasePatternFragment extends Fragment {
         for (StitchPatternRelation s: list) {
             int oldColor = s.getColorID();
             int newColor = mPatternPresenter.getStitch(s.getRow(), s.getCol()).getColorID();
-            if (oldColor != newColor && newColor != mCellDefaultColor && oldColor != mCellDefaultColor) {
+            if (hasACustomColorChanged(oldColor, newColor)) {
                 mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(newColor);
                 mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(newColor);
-            } else if (oldColor != newColor && newColor == mCellDefaultColor && oldColor != mCellDefaultColor) {
+            } else if (hasACustomColorChangedToDefault(oldColor, newColor)) {
                 mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(oldColor);
                 mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(oldColor);
-            } else if (oldColor != newColor && newColor != mCellDefaultColor && oldColor == mCellDefaultColor) {
+            } else if (hasADefaultColorChangedToACustomColor(oldColor, newColor)) {
                 mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(newColor);
                 mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(newColor);
-            } else if (oldColor == newColor) {
+            } else if (hasNoColorChanged(oldColor, newColor)) {
                 mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(oldColor);
                 mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(oldColor);
             }
         }
+    }
+
+    private boolean hasNoColorChanged(int oldColor, int newColor) {
+        return oldColor == newColor;
+    }
+
+    private boolean hasADefaultColorChangedToACustomColor(int oldColor, int newColor) {
+        return oldColor != newColor && newColor != mCellDefaultColor && oldColor == mCellDefaultColor;
+    }
+
+    private boolean hasACustomColorChangedToDefault(int oldColor, int newColor) {
+        return oldColor != newColor && newColor == mCellDefaultColor && oldColor != mCellDefaultColor;
+    }
+
+    private boolean hasACustomColorChanged(int oldColor, int newColor) {
+        return oldColor != newColor && newColor != mCellDefaultColor && oldColor != mCellDefaultColor;
     }
 
 }

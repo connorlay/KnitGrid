@@ -218,7 +218,6 @@ public class PatternPresenter implements Parcelable {
         for (int i = 0; i < mRows; i++) {
             for (int j = 0; j < mCols; j++) {
                 if (mStitchGrid[i][j] != null) {
-                    //new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j).save();
                     new StitchPatternRelation(mPattern, mStitchGrid[i][j], i, j, mStitchGrid[i][j].getColorID()).save();
                 }
             }

@@ -31,7 +31,6 @@ public class PatternCreateFragment extends BasePatternFragment {
         bindCellListener(new CellSelectedListener() {
             @Override
             public void onCellSelected(int row, int col) {
-                //setGridBackgroundColor(mCellDefaultColor);
                 setGridBackgroundMultiColor();
                 listener.onCellSelected(row, col);
                 mGridLayout.getChildAt(row * mPatternPresenter.getColumns() + col).setBackgroundColor(mCellHighlightColor);
@@ -40,7 +39,7 @@ public class PatternCreateFragment extends BasePatternFragment {
             @Override
             public void onCellSelected(int row, int col) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                MulticolorFragment mcf = MulticolorFragment.newInstance(PatternCreateFragment.this, row, col);
+                MulticolorDialogFragment mcf = MulticolorDialogFragment.newInstance(PatternCreateFragment.this, row, col);
                 mcf.show(fm, "BasePatternFragment");
                 setGridBackgroundMultiColor();
                 listener.onCellSelected(row, col);

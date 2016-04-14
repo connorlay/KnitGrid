@@ -35,13 +35,7 @@ public class PatternHighlightFragment extends BasePatternFragment {
                 highlightUpToCell(row, col);
                 setHighlightPrefs(mPatternPresenter.getPatternId().toString(), row, col);
             }
-        }, new CellSelectedListener() {
-            @Override
-            public void onCellSelected(int row, int col) {
-                highlightUpToCell(row, col);
-                setHighlightPrefs(mPatternPresenter.getPatternId().toString(), row, col);
-            }
-        });
+        }, null);
 
         Long patternId = mPatternPresenter.getPatternId();
         if (patternId != null) {

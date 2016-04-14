@@ -16,10 +16,10 @@ import com.connorlay.knitgrid.presenters.PatternPresenter;
 /**
  * Created by Greg on 4/5/2016.
  */
-public class MulticolorFragment extends DialogFragment {
+public class MulticolorDialogFragment extends DialogFragment {
 
-    public static MulticolorFragment newInstance(BasePatternFragment bpf,int row, int col){
-        MulticolorFragment fragment = new MulticolorFragment();
+    public static MulticolorDialogFragment newInstance(BasePatternFragment bpf,int row, int col){
+        MulticolorDialogFragment fragment = new MulticolorDialogFragment();
         fragment.setBasePatternFragment(bpf);
         fragment.setRow(row);
         fragment.setCol(col);
