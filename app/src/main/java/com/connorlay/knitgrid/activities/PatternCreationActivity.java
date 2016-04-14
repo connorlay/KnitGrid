@@ -66,7 +66,6 @@ public class PatternCreationActivity extends AppCompatActivity implements
                     if (frag == null) {
                         return;
                     }
-
                     frag.setStitch(selectedRow, selectedColumn, stitch);
                 }
             });

@@ -90,6 +90,7 @@ public abstract class BasePatternFragment extends Fragment {
 
                 if (stitch == null) {
                     cellImageView.setImageResource(R.drawable.blank);
+                    cellImageView.setBackgroundColor(mCellDefaultColor);
                 } else {
                     cellImageView.setImageResource(stitch.getIconID());
                 }
@@ -120,6 +121,9 @@ public abstract class BasePatternFragment extends Fragment {
                 cell.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
+                        if (listenerLongClick == null) {
+                            return false;
+                        }
                         listenerLongClick.onCellSelected(row, col);
                         return false;
                     }

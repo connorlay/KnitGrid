@@ -38,6 +38,9 @@ public class PatternCreateFragment extends BasePatternFragment {
         }, new CellSelectedListener() {
             @Override
             public void onCellSelected(int row, int col) {
+                if (mPatternPresenter.getStitch(row, col) == null) {
+                    return;
+                }
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 MulticolorDialogFragment mcf = MulticolorDialogFragment.newInstance(PatternCreateFragment.this, row, col);
                 mcf.show(fm, "BasePatternFragment");
@@ -51,6 +54,12 @@ public class PatternCreateFragment extends BasePatternFragment {
     }
 
     public void setStitch(int row, int column, Stitch stitch) {
+        Stitch oldStitch = mPatternPresenter.getStitch(row, column);
+        if (oldStitch != null) {
+            stitch.setColorID(oldStitch.getColorID());
+        } else {
+            stitch.setColorID(mCellDefaultColor);
+        }
         mPatternPresenter.setStitch(row, column, stitch);
         ImageView cell = (ImageView) mGridLayout.getChildAt(row * mGridLayout.getColumnCount() +
                 column);

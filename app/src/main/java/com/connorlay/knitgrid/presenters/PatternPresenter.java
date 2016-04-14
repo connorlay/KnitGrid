@@ -114,8 +114,7 @@ public class PatternPresenter implements Parcelable {
     }
 
     public void setStitchColor(int colorID, int row, int col){
-        if (mStitchGrid == null){
-            savePattern();
+        if (mStitchGrid[row][col] == null) {
             return;
         }
         mStitchGrid[row][col].setColorID(colorID);
