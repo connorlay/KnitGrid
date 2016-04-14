@@ -14,5 +14,6 @@
     <string name="show_even_rows_checkbox_label">Show even rows</string>
     <string name="knit">knit</string>
     <string name="activity_pattern_list_published_success">Pattern published!</string>
-    <string name="activity_pattern_list_publish_failure">Pattern has already been published!</string>
+    <string name="activity_pattern_list_publish_failure">Sorry! There was an error publishing online.</string>
+    <string name="activity_pattern_list_already_published">Sorry! That pattern has already been published.</string>
 </resources>

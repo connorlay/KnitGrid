@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.connorlay.knitgrid.R;
@@ -84,7 +83,7 @@ public class PatternListActivity extends AppCompatActivity {
         } else if (item.getItemId() == CONTEXT_ACTION_UPLOAD) {
             Pattern selectedItem = adapter.getPattern(adapter.getSelectedPosition());
             if (selectedItem.getUuid() != null) {
-                displaySnackbar(getString(R.string.activity_pattern_list_publish_failure));
+                displaySnackbar(getString(R.string.activity_pattern_list_already_published));
             } else {
                 publishPattern(selectedItem);
             }
@@ -106,21 +105,18 @@ public class PatternListActivity extends AppCompatActivity {
                 .baseUrl("https://knitgrid-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-
         KnitGridAPI api = retrofit.create(KnitGridAPI.class);
-
-        api.createPattern(pattern).enqueue(new Callback<Pattern>() {
+        api.createPattern(pattern).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Pattern> call, Response<Pattern> response) {
-                // TODO: write custom stitch pattern deserializer
-                pattern.setUuid(response.body().getUuid());
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                pattern.setUuid(Long.valueOf(response.headers().get("Uuid")));
+                pattern.save();
                 displaySnackbar(getString(R.string.activity_pattern_list_published_success));
-                Log.d(CREATE_PATTERN_RESPONSE, response.toString());
             }
 
             @Override
-            public void onFailure(Call<Pattern> call, Throwable t) {
-                Log.d(CREATE_PATTERN_RESPONSE, t.getLocalizedMessage());
+            public void onFailure(Call<Void> call, Throwable t) {
+                displaySnackbar(getString(R.string.activity_pattern_list_publish_failure));
             }
         });
     }

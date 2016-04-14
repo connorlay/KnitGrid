@@ -21,5 +21,5 @@ public interface KnitGridAPI {
     Call<List<Pattern>> indexPatterns();
 
     @POST("v1/patterns")
-    Call<Pattern> createPattern(@Body Pattern pattern);
+    Call<Void> createPattern(@Body Pattern pattern);
 }
