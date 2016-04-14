@@ -29,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activities.PatternOnlineListActivity"/>
         <activity android:name=".activities.StitchDetailActivity"/>
         <activity android:name=".activities.PatternDetailActivity"/>
         <activity android:name=".activities.PatternCreationActivity">
