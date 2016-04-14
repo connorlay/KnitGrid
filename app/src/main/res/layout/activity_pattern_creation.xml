@@ -1,58 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/patternViewBackground"
     tools:context="com.connorlay.knitgrid.activities.PatternCreationActivity">
 
     <LinearLayout
+        android:id="@+id/pattern_creation_save_button_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:elevation="7dp">
 
         <Button
             android:id="@+id/cancel_pattern_creation_button"
-            style="@android:style/Widget.Holo.Button.Borderless.Small"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            style="@style/TabNavigationButton"
             android:text="@android:string/cancel"/>
 
         <Button
             android:id="@+id/save_pattern_button"
-            style="@android:style/Widget.Holo.Button.Borderless.Small"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            style="@style/TabNavigationButton"
             android:text="@string/save_button"/>
     </LinearLayout>
 
-    <ScrollView
+    <GridLayout
+        android:id="@+id/stitch_button_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:columnCount="5"
+        android:useDefaultMargins="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="7dp"
+        android:background="@color/colorPrimary">
+    </GridLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/pattern_detail_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/stitch_button_bar"
+        android:layout_below="@id/pattern_creation_save_button_bar"/>
 
-            <FrameLayout
-                android:id="@+id/pattern_detail_frame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
-            <GridLayout
-                android:id="@+id/stitch_button_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="5"
-                android:useDefaultMargins="false">
-            </GridLayout>
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>

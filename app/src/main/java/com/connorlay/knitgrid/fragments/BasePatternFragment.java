@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.connorlay.knitgrid.R;
 import com.connorlay.knitgrid.models.Stitch;
@@ -27,11 +30,13 @@ import butterknife.ButterKnife;
  * Created by connorlay on 3/29/16.
  */
 public abstract class BasePatternFragment extends Fragment {
+
     public interface CellSelectedListener {
         void onCellSelected(int row, int col);
     }
 
-    public static final int PATTERN_GRID_PADDING = 16;
+    public static final int PATTERN_GRID_PADDING = 20;
+    private static final int MINIMUM_CELL_WIDTH = 50;
     public static final String ARG_PATTERN_PRESENTER = "BasePatternFragment.PatternPresenter";
 
     @Bind(R.id.activity_pattern_detail_grid_layout)
@@ -58,6 +63,8 @@ public abstract class BasePatternFragment extends Fragment {
     @BindColor(R.color.White)
     int white;
 
+    @BindColor(R.color.colorPrimaryTextPastel)
+    int textColor;
 
     protected PatternPresenter mPatternPresenter;
 
@@ -74,13 +81,23 @@ public abstract class BasePatternFragment extends Fragment {
         return rootView;
     }
 
+    private void addNumberLabel(int number) {
+        TextView numberText = new TextView(getContext());
+        numberText.setText(String.valueOf(number + 1));
+        float textSize = pixelsToSp(convertToPixels(MINIMUM_CELL_WIDTH) - 5);
+        numberText.setTextSize(textSize);
+        numberText.setTextColor(textColor);
+        mGridLayout.addView(numberText);
+    }
+
     private void populateGridLayout() {
         int cellSize = calculateCellSize(mPatternPresenter.getColumns());
         mGridLayout.setRowCount(mPatternPresenter.getRows());
         mGridLayout.setColumnCount(mPatternPresenter.getColumns());
 
-        for (int i = 0; i < mPatternPresenter.getRows(); i += 1) {
-            for (int j = 0; j < mPatternPresenter.getColumns(); j += 1) {
+        for (int i = 0; i < mPatternPresenter.getRows(); i++) {
+            // addNumberLabel(mPatternPresenter.getRows() - i);
+            for (int j = 0; j < mPatternPresenter.getColumns(); j++) {
                 final int row = i;
                 final int column = j;
 
@@ -102,6 +119,9 @@ public abstract class BasePatternFragment extends Fragment {
                 mGridLayout.addView(cellImageView, cellSize, cellSize);
             }
         }
+//        for (int i = 0; i < mPatternPresenter.getColumns(); i++) {
+//            addNumberLabel(mPatternPresenter.getColumns() - i);
+//        }
     }
 
     protected void bindCellListener(final CellSelectedListener listener, final CellSelectedListener listenerLongClick) {
@@ -110,7 +130,8 @@ public abstract class BasePatternFragment extends Fragment {
                 final int row = i;
                 final int col = j;
 
-                ImageView cell = (ImageView) mGridLayout.getChildAt(row * mPatternPresenter.getColumns() + col);
+                ImageView cell = (ImageView) mGridLayout.getChildAt(row * mPatternPresenter
+                        .getColumns() + col);
 
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -143,12 +164,19 @@ public abstract class BasePatternFragment extends Fragment {
         display.getSize(point);
 
         float paddingWidthDp = PATTERN_GRID_PADDING / getResources().getDisplayMetrics().density;
-        return (int) ((point.x - 2 * paddingWidthDp) / columns + 0.5f);
+        int calculatedWidth = (int) ((point.x - 2 * paddingWidthDp) / columns + 0.5f);
+        int minimumWidth = convertToPixels(MINIMUM_CELL_WIDTH);
+        return calculatedWidth < minimumWidth ? minimumWidth : calculatedWidth;
     }
 
     private int convertToPixels(float dp) {
         float density = getResources().getDisplayMetrics().density;
         return (int) (dp / density);
+    }
+
+    public float pixelsToSp(float px) {
+        float scaledDensity = getResources().getDisplayMetrics().scaledDensity;
+        return px / scaledDensity;
     }
 
     private void setViewPadding(View view, float dp) {

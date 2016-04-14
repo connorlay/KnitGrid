@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.connorlay.knitgrid.R;
 import com.connorlay.knitgrid.activities.PatternDetailActivity;
 import com.connorlay.knitgrid.activities.StitchDetailActivity;
+import com.connorlay.knitgrid.adapters.ListDivider;
 import com.connorlay.knitgrid.adapters.PatternLegendRecyclerViewAdapter;
 import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.models.Stitch;
@@ -63,6 +64,7 @@ public class PatternDetailLegendFragment extends Fragment implements PatternLege
         }
         recyclerView.setAdapter(new PatternLegendRecyclerViewAdapter(stitches, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new ListDivider(getActivity()));
 
         return rootView;
     }

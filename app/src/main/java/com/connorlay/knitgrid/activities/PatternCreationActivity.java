@@ -46,6 +46,7 @@ public class PatternCreationActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_creation);
         ButterKnife.bind(this);
+        getSupportActionBar().hide();
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(KEY_EDIT_ITEM)) {
             Pattern pattern = (Pattern) getIntent().getParcelableExtra(KEY_EDIT_ITEM);
@@ -74,14 +75,11 @@ public class PatternCreationActivity extends AppCompatActivity implements
                     frag.setStitch(selectedRow, selectedColumn, stitch);
                 }
             });
-            int buttonPadding = dpToPx(3);
-            button.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
-            int buttonWidth = calculateButtonWidth(buttonPadding);
+            int buttonWidth = calculateButtonWidth(0);
             buttonBar.addView(button, buttonWidth, buttonWidth);
         }
         int padding = dpToPx(BasePatternFragment.PATTERN_GRID_PADDING);
         buttonBar.setPadding(padding, padding, padding, padding);
-        buttonBar.setVisibility(View.GONE);
     }
 
     private int calculateButtonWidth(int buttonPadding) {
@@ -93,7 +91,7 @@ public class PatternCreationActivity extends AppCompatActivity implements
         display.getSize(point);
 
         float px = dpToPx(BasePatternFragment.PATTERN_GRID_PADDING);
-        return (int) ((point.x - 2 * px) / buttonBar.getColumnCount() - (2 * buttonPadding));
+        return (int) ((point.x - (2 + buttonBar.getColumnCount()) * px) / buttonBar.getColumnCount() - (2 * buttonPadding));
     }
 
     private int dpToPx(int dp) {

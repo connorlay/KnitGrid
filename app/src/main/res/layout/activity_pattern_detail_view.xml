@@ -24,11 +24,6 @@
             style="@style/TabNavigationButton"
             android:text="@string/activity_pattern_detail_legend_button_text" />
 
-        <Button
-            android:id="@+id/activity_pattern_detail_navigation_collapse_button"
-            style="@style/TabNavigationButton"
-            android:text="@string/activity_pattern_detail_navigation_collapse_button_text" />
-
     </LinearLayout>
 
     <FrameLayout
