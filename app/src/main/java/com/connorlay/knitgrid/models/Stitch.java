@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.connorlay.knitgrid.R;
 import com.orm.SugarRecord;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.io.Serializable;
 
@@ -18,7 +20,7 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
     private String instructions;
     private int iconID;
     private boolean isDefault;
-    private int uuid;
+    private Long uuid;
 
     public Stitch() {
 
@@ -69,7 +71,7 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
         }
     };
 
-    public int getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
@@ -115,6 +117,10 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
 
         return abbreviation.equals(stitch.abbreviation);
 
+    }
+
+    public static Stitch findByUuid(int uuid) {
+        return Select.from(Stitch.class).where(Condition.prop("uuid").eq(uuid)).first();
     }
 
     @Override

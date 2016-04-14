@@ -2,6 +2,7 @@ package com.connorlay.knitgrid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,14 +83,22 @@ public class PatternListActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (item.getItemId() == CONTEXT_ACTION_UPLOAD) {
             Pattern selectedItem = adapter.getPattern(adapter.getSelectedPosition());
-            publishPattern(selectedItem);
+            if (selectedItem.getUuid() != null) {
+                displaySnackbar(getString(R.string.activity_pattern_list_publish_failure));
+            } else {
+                publishPattern(selectedItem);
+            }
         } else {
             return false;
         }
         return true;
     }
 
-    private void publishPattern(Pattern pattern) {
+    private void displaySnackbar(String message) {
+        Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void publishPattern(final Pattern pattern) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(Pattern.class, new PatternSerializer());
         Gson gson = gsonBuilder.create();
@@ -104,6 +113,8 @@ public class PatternListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Pattern> call, Response<Pattern> response) {
                 // TODO: write custom stitch pattern deserializer
+                pattern.setUuid(response.body().getUuid());
+                displaySnackbar(getString(R.string.activity_pattern_list_published_success));
                 Log.d(CREATE_PATTERN_RESPONSE, response.toString());
             }
 

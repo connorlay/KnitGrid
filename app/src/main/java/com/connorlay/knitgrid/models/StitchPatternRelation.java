@@ -60,6 +60,10 @@ public class StitchPatternRelation extends SugarRecord implements Parcelable {
         return uuid;
     }
 
+    public void setUuid(int uuid) {
+        this.uuid = uuid;
+    }
+
     public Pattern getPattern() {
         return pattern;
     }

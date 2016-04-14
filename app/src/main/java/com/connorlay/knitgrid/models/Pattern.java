@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.List;
 
@@ -15,7 +16,10 @@ public class Pattern extends SugarRecord implements Parcelable {
     private int rows;
     private int columns;
     private boolean showEvenRows;
-    private int uuid;
+    private Long uuid;
+
+    @Ignore
+    private List<StitchPatternRelation> stitchPatternRelations;
 
     public Pattern() {
     }
@@ -65,7 +69,7 @@ public class Pattern extends SugarRecord implements Parcelable {
         return name;
     }
 
-    public int getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
@@ -75,6 +79,10 @@ public class Pattern extends SugarRecord implements Parcelable {
 
     public int getColumns() {
         return columns;
+    }
+
+    public void setUuid(Long uuid) {
+        this.uuid = uuid;
     }
 
     public boolean showsEvenRows() {
@@ -98,7 +106,19 @@ public class Pattern extends SugarRecord implements Parcelable {
     }
 
     public List<StitchPatternRelation> getStitchRelations() {
-        return StitchPatternRelation.find(StitchPatternRelation.class, "pattern = ?", String.valueOf(this.getId()));
+        if (stitchPatternRelations == null) {
+            stitchPatternRelations = StitchPatternRelation.find(StitchPatternRelation.class, "pattern = ?", String.valueOf(this.getId()));
+        }
+        return stitchPatternRelations;
+    }
+
+    public void saveStitchPatternRelatons() {
+        if (stitchPatternRelations == null) {
+            return;
+        }
+        for (StitchPatternRelation relation : stitchPatternRelations) {
+            relation.save();
+        }
     }
 
     public void setStitch(Stitch stitch, int row, int column) {

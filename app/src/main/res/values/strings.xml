@@ -13,4 +13,6 @@
     <string name="create_pattern_dialog_positive_button">Create</string>
     <string name="show_even_rows_checkbox_label">Show even rows</string>
     <string name="knit">knit</string>
+    <string name="activity_pattern_list_published_success">Pattern published!</string>
+    <string name="activity_pattern_list_publish_failure">Pattern has already been published!</string>
 </resources>

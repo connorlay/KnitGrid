@@ -17,7 +17,7 @@ public class PatternPresenterTest {
 
     @Before
     public void setup() {
-        mPatternPresenter = new PatternPresenter(ROWS, COLUMNS);
+        mPatternPresenter = new PatternPresenter(ROWS, COLUMNS, false);
         mPatternPresenter.setStitch(0, 0, new Stitch("a", R.drawable.k, "", "", true));
         mPatternPresenter.setStitch(0, 1, new Stitch("b", R.drawable.k, "", "", true));
         mPatternPresenter.setStitch(0, 2, new Stitch("c", R.drawable.k, "", "", true));
@@ -42,14 +42,14 @@ public class PatternPresenterTest {
                           "_, _, _, _\n" +
                           "_, _, _, _\n" +
                           "_, _, _, _\n";
-        assert(new PatternPresenter(ROWS, COLUMNS).toString()).equals(expected);
+        assert(new PatternPresenter(ROWS, COLUMNS, false).toString()).equals(expected);
     }
 
     @Test
     public void testWidthAndHeight() {
         int width = 5;
         int height = 6;
-        PatternPresenter patternPresenter = new PatternPresenter(width, height);
+        PatternPresenter patternPresenter = new PatternPresenter(width, height, false);
 
         assert(patternPresenter.getRows() == width);
         assert(patternPresenter.getColumns() == height);
