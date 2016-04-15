@@ -15,4 +15,5 @@
     <string name="knit">knit</string>
     <string name="okay">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="app_title_formatted">Knit Grid</string>
 </resources>

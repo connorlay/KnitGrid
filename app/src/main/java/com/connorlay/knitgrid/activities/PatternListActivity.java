@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 
 import com.connorlay.knitgrid.R;
+import com.connorlay.knitgrid.adapters.ListDivider;
 import com.connorlay.knitgrid.adapters.PatternRecyclerViewAdapter;
 import com.connorlay.knitgrid.models.Pattern;
 import com.connorlay.knitgrid.models.Stitch;
@@ -38,6 +39,8 @@ public class PatternListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pattern_list);
         ButterKnife.bind(this);
 
+        setTitle(getString(R.string.app_title_formatted));
+
         if (isFirstLaunch()) {
             generateDefaultData();
             getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE).edit().putBoolean
@@ -58,6 +61,7 @@ public class PatternListActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.addItemDecoration(new ListDivider(this));
 
         registerForContextMenu(mRecyclerView);
     }
