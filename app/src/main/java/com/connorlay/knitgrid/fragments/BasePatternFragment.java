@@ -14,7 +14,10 @@ import android.widget.ImageView;
 
 import com.connorlay.knitgrid.R;
 import com.connorlay.knitgrid.models.Stitch;
+import com.connorlay.knitgrid.models.StitchPatternRelation;
 import com.connorlay.knitgrid.presenters.PatternPresenter;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindColor;
@@ -39,6 +42,22 @@ public abstract class BasePatternFragment extends Fragment {
 
     @BindColor(R.color.cellHighlight)
     int mCellHighlightColor;
+
+    @BindColor(R.color.Red)
+    int red;
+
+    @BindColor(R.color.Yellow)
+    int yellow;
+
+    @BindColor(R.color.Blue)
+    int blue;
+
+    @BindColor(R.color.Purple)
+    int purple;
+
+    @BindColor(R.color.White)
+    int white;
+
 
     protected PatternPresenter mPatternPresenter;
 
@@ -71,18 +90,21 @@ public abstract class BasePatternFragment extends Fragment {
 
                 if (stitch == null) {
                     cellImageView.setImageResource(R.drawable.blank);
+                    cellImageView.setBackgroundColor(mCellDefaultColor);
                 } else {
                     cellImageView.setImageResource(stitch.getIconID());
                 }
 
-                cellImageView.setBackgroundColor(mCellDefaultColor);
+                if (stitch != null){
+                    cellImageView.setBackgroundColor(stitch.getColorID());
+                }
 
                 mGridLayout.addView(cellImageView, cellSize, cellSize);
             }
         }
     }
 
-    protected void bindCellListener(final CellSelectedListener listener) {
+    protected void bindCellListener(final CellSelectedListener listener, final CellSelectedListener listenerLongClick) {
         for (int i = 0; i < mPatternPresenter.getRows(); i++) {
             for (int j = 0; j < mPatternPresenter.getColumns(); j++) {
                 final int row = i;
@@ -94,6 +116,16 @@ public abstract class BasePatternFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         listener.onCellSelected(row, col);
+                    }
+                });
+                cell.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (listenerLongClick == null) {
+                            return false;
+                        }
+                        listenerLongClick.onCellSelected(row, col);
+                        return false;
                     }
                 });
             }
@@ -128,6 +160,43 @@ public abstract class BasePatternFragment extends Fragment {
         for (int i = 0; i < mGridLayout.getChildCount(); i++) {
             mGridLayout.getChildAt(i).setBackgroundColor(color);
         }
+    }
+
+    protected void setGridBackgroundMultiColor(){
+        List<StitchPatternRelation> list = mPatternPresenter.getPattern().getStitchRelations();
+        for (StitchPatternRelation s: list) {
+            int oldColor = s.getColorID();
+            int newColor = mPatternPresenter.getStitch(s.getRow(), s.getCol()).getColorID();
+            if (hasACustomColorChanged(oldColor, newColor)) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(newColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(newColor);
+            } else if (hasACustomColorChangedToDefault(oldColor, newColor)) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(oldColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(oldColor);
+            } else if (hasADefaultColorChangedToACustomColor(oldColor, newColor)) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(newColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(newColor);
+            } else if (hasNoColorChanged(oldColor, newColor)) {
+                mGridLayout.getChildAt(s.getRow() * mPatternPresenter.getColumns() + s.getCol()).setBackgroundColor(oldColor);
+                mPatternPresenter.getStitch(s.getRow(), s.getCol()).setColorID(oldColor);
+            }
+        }
+    }
+
+    private boolean hasNoColorChanged(int oldColor, int newColor) {
+        return oldColor == newColor;
+    }
+
+    private boolean hasADefaultColorChangedToACustomColor(int oldColor, int newColor) {
+        return oldColor != newColor && newColor != mCellDefaultColor && oldColor == mCellDefaultColor;
+    }
+
+    private boolean hasACustomColorChangedToDefault(int oldColor, int newColor) {
+        return oldColor != newColor && newColor == mCellDefaultColor && oldColor != mCellDefaultColor;
+    }
+
+    private boolean hasACustomColorChanged(int oldColor, int newColor) {
+        return oldColor != newColor && newColor != mCellDefaultColor && oldColor != mCellDefaultColor;
     }
 
 }

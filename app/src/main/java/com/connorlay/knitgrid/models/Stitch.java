@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.connorlay.knitgrid.R;
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.io.Serializable;
 
@@ -19,8 +20,19 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
     private int iconID;
     private boolean isDefault;
 
+    @Ignore
+    private int colorID;
+
     public Stitch() {
 
+    }
+
+    public int getColorID() {
+        return colorID;
+    }
+
+    public void setColorID(int colorID) {
+        this.colorID = colorID;
     }
 
     // TODO: Right now I'm passing the id of the drawable on creation. Not sure if there's a way
@@ -32,6 +44,8 @@ public class Stitch extends SugarRecord implements Parcelable, Serializable {
         this.instructions = instructions;
         this.iconID = iconID;
         this.isDefault = isDefault;
+        colorID = R.color.cellDefault;
+
     }
 
     protected Stitch(Parcel in) {

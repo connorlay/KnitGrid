@@ -35,34 +35,33 @@ public class PatternHighlightFragment extends BasePatternFragment {
                 highlightUpToCell(row, col);
                 setHighlightPrefs(mPatternPresenter.getPatternId().toString(), row, col);
             }
-        });
+        }, null);
 
         Long patternId = mPatternPresenter.getPatternId();
         if (patternId != null) {
             int[] highlightCoords = getHighlightPrefs(mPatternPresenter.getPatternId().toString());
             highlightUpToCell(highlightCoords[0], highlightCoords[1]);
         }
-
         return rootView;
     }
 
     private void highlightUpToCell(int row, int column) {
+        setGridBackgroundMultiColor();
         int defaultUpToIndex = row * mPatternPresenter.getColumns();
         int pivotIndex = defaultUpToIndex + column;
         int highlightAfterIndex = (row + 1) * mPatternPresenter.getColumns();
-
         for (int i = 0; i < mPatternPresenter.getRows() * mPatternPresenter.getColumns(); i += 1) {
             ImageView cell = (ImageView) mGridLayout.getChildAt(i);
 
             if (mPatternPresenter.showsEvenRows() && row % 2 == 0) {
                 if (i < defaultUpToIndex || i > pivotIndex && i < highlightAfterIndex) {
-                    cell.setBackgroundColor(mCellDefaultColor);
+
                 } else {
                     cell.setBackgroundColor(mCellHighlightColor);
                 }
             } else {
                 if (i < pivotIndex) {
-                    cell.setBackgroundColor(mCellDefaultColor);
+
                 } else {
                     cell.setBackgroundColor(mCellHighlightColor);
                 }
